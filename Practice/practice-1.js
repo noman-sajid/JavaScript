@@ -26,5 +26,8 @@ typeof(c - b) //number
  
     obj.name = "jerry";//dotnotation
     obj["age"] = 30;//bracket notation
-
+    obj["hobby"] = "cricket";//adding a new property to the object
+    // datatype of property value can be anything and assigned dynamically that means if a key is a string it can be changed to a number or boolean or object or array
+    obj.age = "thirty"
+   
   console.log(obj) //Yes we certainly can change the values within the object 
