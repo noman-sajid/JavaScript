@@ -24,6 +24,7 @@ typeof(c - b) //number
 
   //but we can change the properties of the object
  
-  obj.name = "jerry";
+    obj.name = "jerry";//dotnotation
+    obj["age"] = 30;//bracket notation
 
   console.log(obj) //Yes we certainly can change the values within the object 
