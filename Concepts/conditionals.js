@@ -28,3 +28,6 @@ switch (age) {
         console.log("Enjoy your life");
         break;
 }
+
+// Ternary Operator
+console.log(age >= 18 ? "You can vote" : "You cannot vote");
