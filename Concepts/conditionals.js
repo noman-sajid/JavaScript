@@ -10,3 +10,21 @@ if (a < 0) {
  else {
     console.log("You are not a valid person");
 }
+
+// Switch case
+let age = prompt("Enter your age");
+age = Number.parseInt(age);
+switch (age) {
+    case 18:
+        console.log("You are going to become an adult");    
+        break;
+    case 21:
+        console.log("You are going to become a adult and you can vote");    
+        break;
+    case 24:
+        console.log("You are going to become an adult and you can marry");
+        break;
+    default:
+        console.log("Enjoy your life");
+        break;
+}
