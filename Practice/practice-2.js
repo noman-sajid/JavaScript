@@ -38,3 +38,29 @@ switch(parseInt(day)){
         console.log("Monday")
         break;
 }            
+
+
+// Problem 3: Write a JavaScript program to find weather a number is divisible by either 2 or 3
+
+let num = 9 
+ 
+if(num % 2 === 0 || num % 3 === 0){
+    console.log("The number is divisible by either 2 or 3");
+} else {
+    console.log("The number is not divisible by either 2 or 3");
+}
+
+// Problem 4: Write a JavaScript program to find weather a number is divisible by 2 and 3 both or either of them or none of them
+
+let n = 7
+if(n % 2 === 0 && n % 3 === 0){
+    console.log("The number is divisible by both 2 and 3");
+} else if(n % 2 === 0 || n % 3 === 0){
+    console.log("The number is divisible by either 2 or 3");
+}
+
+// Problem 5: Print "You can drive" or "You cannot drive" based on age being greater than or equal to 18 using Tern Operator
+
+let a = 16 
+ 
+a >= 18 ? console.log("You can drive") : console.log("You cannot drive");
