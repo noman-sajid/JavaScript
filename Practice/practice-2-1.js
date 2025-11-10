@@ -31,3 +31,40 @@ let amount = str.match(/\$\d+/)[0];
 console.log(amount); // Output: $1000
 // to do such a thing like extracting number from string we can use regex (regular expression) -- A topic We are to speak of later
 
+// Problem 5 : Change the nth character of a string
+
+
+function replaceCharacter(str, index, newChar){
+    let arr = str.split('');
+    for(let i = 0; i < arr.length ; i++){
+        if(i === index){
+            arr[i] = newChar
+        }
+    }
+    return arr.join('')
+}
+
+const result = replaceCharacter("what", 0, 'W')
+console.log(result)
+
+//It also can be done like this
+
+function replaceCharacterSimple(str, index, newChar) {
+    let arr = str.split('');
+    if (index >= 0 && index < arr.length) {
+        arr[index] = newChar;
+    }
+    return arr.join('');
+}
+
+const resultSimple = replaceCharacterSimple("Yallow", 1, 'e');
+console.log(resultSimple); // Output: Yellow
+
+// more simpler way to do this
+
+function replaceCharacterSlice(str, index, newChar) {   
+    let newString = str.slice(0, index) + newChar + str.slice(index + 1);
+    return newString;
+}
+const resultSlice = replaceCharacterSlice("bellow", 0, 'Y');
+console.log(resultSlice); // Output: Yellow
