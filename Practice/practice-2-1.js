@@ -24,3 +24,10 @@ let upperCaseString = "HELLO WORLD";
 let lowerCaseString = upperCaseString.toLowerCase();
 console.log(lowerCaseString); // Output: hello world
 
+// Problem 4 : Extract the number/amount from the string "Please Give $1000"
+
+let str = "Please Give $1000";
+let amount = str.match(/\$\d+/)[0];
+console.log(amount); // Output: $1000
+// to do such a thing like extracting number from string we can use regex (regular expression) -- A topic We are to speak of later
+
