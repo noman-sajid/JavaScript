@@ -68,3 +68,4 @@ function replaceCharacterSlice(str, index, newChar) {
 }
 const resultSlice = replaceCharacterSlice("bellow", 0, 'Y');
 console.log(resultSlice); // Output: Yellow
+
