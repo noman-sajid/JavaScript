@@ -35,3 +35,25 @@ function reverseArrES6(arr) {
 let array3 = [9, 10, 11, 12];
 let reversed3 = reverseArrES6(array3);
 console.log(reversed3);
+
+// Problem 2 : Write a program to find the largest number in an array
+
+
+function largestNumber(arr){
+    let largest = arr[0];
+    for(let i = 1; i < arr.length; i++){
+        if(arr[i] > largest){
+            largest = arr[i];
+        }
+    }
+    return largest;
+}
+
+let arr = [1,2,3,4,5,6,7,8,9,10];
+console.log(largestNumber(arr));
+
+// Another approach using Math.max and spread operator
+
+function largestNumberMathMax(arr){
+    return Math.max(...arr);
+}
