@@ -124,8 +124,36 @@ function isDivisible(arr){
 
 console.log(isDivisible(numbersDivisible))
 
+// Problem 5 : Create an array of square of the given numbers
+
+//map() method
+let nums = [1, 2, 3, 4, 5, 6]
+
+let squaredNums = nums.map((num)=> num*num)
+console.log(squaredNums)
+
+// using for loop
 
 
 
+    
+function squaredNumbers(arr){
+    let squared = []
+    for(let i = 0; i < arr.length; i++){
+    squared.push(arr[i] * arr[i])
+    }
+    return squared;
+}
+
+console.log(squaredNumbers(nums))
 
 
+// Problem 6 : Use reduce method to find factorial of a number from an array of first n natural numbers
+
+let n = 5;
+let naturalNumbers = [];
+for(let i = 1; i <= n; i++){
+    naturalNumbers.push(i);
+}
+let factorial = naturalNumbers.reduce((acc, curr) => acc * curr, 1);
+console.log(factorial);
