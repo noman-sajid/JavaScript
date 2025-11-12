@@ -57,3 +57,44 @@ console.log(largestNumber(arr));
 function largestNumberMathMax(arr){
     return Math.max(...arr);
 }
+
+//Problem 3 : Create an array of numbers and take input from user and add the number to the array
+
+let numbersArray = [10, 20, 30, 40, 50];
+function addNumberToArray(num){
+    numbersArray.push(num);
+    return numbersArray;
+}
+let userInput = 60; 
+let updatedArray = addNumberToArray(userInput);
+console.log(updatedArray);
+
+// Another approach without using push method
+
+function addNumberToArrayWithoutPush(arr, num){
+    let newArr = new Array(arr.length + 1);
+    for(let i = 0; i < arr.length; i++){
+        newArr[i] = arr[i];
+    }
+    newArr[arr.length] = num;
+    return newArr;
+}
+let userInput2 = 70;
+let updatedArray2 = addNumberToArrayWithoutPush(numbersArray, userInput2);
+console.log(updatedArray2);
+
+// Problem 3 Update : Create an array of numbers and take input from user and add numbers until the input is 0
+let numbersArray2 = [100, 200, 300];
+function addNumbersUntilZero(arr, inputs){
+    let newArr = arr.slice(); 
+    for(let i = 0; i < inputs.length; i++){
+        if(inputs[i] === 0){
+            break;
+        }
+        newArr.push(inputs[i]);
+    }
+    return newArr;
+}
+let userInputs = [400, 500, 600, 0, 700];
+let updatedArray3 = addNumbersUntilZero(numbersArray2, userInputs);
+console.log(updatedArray3);
