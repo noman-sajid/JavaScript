@@ -136,7 +136,7 @@ console.log(squaredNums)
 
 
 
-    
+
 function squaredNumbers(arr){
     let squared = []
     for(let i = 0; i < arr.length; i++){
@@ -157,3 +157,5 @@ for(let i = 1; i <= n; i++){
 }
 let factorial = naturalNumbers.reduce((acc, curr) => acc * curr, 1);
 console.log(factorial);
+
+
