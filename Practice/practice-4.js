@@ -98,3 +98,34 @@ function addNumbersUntilZero(arr, inputs){
 let userInputs = [400, 500, 600, 0, 700];
 let updatedArray3 = addNumbersUntilZero(numbersArray2, userInputs);
 console.log(updatedArray3);
+
+
+// Problem 4 : Filter numbers divisible by 10 from an array
+
+let numbersDivisible = [10,121,2150,451,30,50]
+
+let filtered = numbersDivisible.filter((number) => number % 10 === 0)
+
+console.log(filtered)
+
+// Another way to do it --Using loops
+
+function isDivisible(arr){
+    let filtered = []
+    for (let i = 0; i < arr.length; i++) {
+       console.log(arr[i])
+        if(arr[i] % 10 == 0){
+            filtered.push(arr[i])
+        }
+   
+    }
+    return filtered
+}
+
+console.log(isDivisible(numbersDivisible))
+
+
+
+
+
+
