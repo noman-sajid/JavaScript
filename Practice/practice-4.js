@@ -158,4 +158,26 @@ for(let i = 1; i <= n; i++){
 let factorial = naturalNumbers.reduce((acc, curr) => acc * curr, 1);
 console.log(factorial);
 
+// Problem 7 : Find the largest number in an array
 
+const numbers = [-5, 10, 2, 45, -100, 33];
+
+function findLargest(arr) {
+    
+    if (arr.length === 0) {
+        return undefined; 
+    }
+    
+    let largest = arr[0]; 
+
+    for (let i = 1; i < arr.length; i++) {
+       
+        if (arr[i] > largest) {
+            largest = arr[i]; 
+        }
+    }
+  
+    return largest;
+}
+
+console.log(findLargest(numbers)); // Output: 45
