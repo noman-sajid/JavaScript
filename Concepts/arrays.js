@@ -126,9 +126,10 @@ fruits.join(" - "); // "Pineapple - Banana - Cherry"
 // Joins all elements of an array into a string with a specified separator
 console.log(fruits.join(" - "));
 //sort() method
-fruits.sort(); // Sorts the array elements in ascending order
+fruits.sort(); // Sorts the array elements in alphabetical order
 console.log(fruits); // ["Banana", "Cherry", "Pineapple"]
 //You could also pass a compare function to sort in a custom order
+
 //Example
 fruits.sort(function(a, b){
     return b.localeCompare(a); // Sorts in descending order
@@ -220,10 +221,34 @@ console.log(flattenedArray); // [1, 2, 3, 4, 5, 6, 7]
 
 // How do you copy an array? (e.g. spread operator [...arr], Array.from(arr))
 
+// For loops with arrays
+// Simple for loop
 let arr = [1, 2, 3, 4, 5];
 
 for(let i = 0; i < arr.length; i++) {
     console.log(arr[i]);
 }
 
+// For Each 
 
+arr.forEach((element) =>{
+   console.log(element * element )
+})
+
+// Array.from 
+
+let name = "Alice";
+let nArr =  Array.from(name)
+console.log(nArr); // ['A', 'l', 'i', 'c', 'e']
+
+// Output each character in the string
+nArr.forEach((char) => {
+    console.log(char);
+});
+// Output:
+// A
+// l
+// i
+// c
+// e
+// The Array.from() method creates a new, shallow-copied Array instance from an array-like or iterable object. In this case, it converts the string "Alice" into an array of its individual characters.
