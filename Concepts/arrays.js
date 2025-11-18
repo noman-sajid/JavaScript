@@ -252,3 +252,17 @@ nArr.forEach((char) => {
 // c
 // e
 // The Array.from() method creates a new, shallow-copied Array instance from an array-like or iterable object. In this case, it converts the string "Alice" into an array of its individual characters.
+
+// For ...of loop
+for (let value of arr) {
+    console.log(value);
+}
+// The for...of statement creates a loop iterating over iterable objects, including arrays. It allows you to loop through the values of an array directly without needing to access them via their index.
+
+// For ...in loop
+for (let index in arr) {
+    console.log(`Index: ${index}, Value: ${arr[index]}`);
+}
+// The for...in statement iterates over all enumerable properties of an object. When used with arrays, it loops through the array indices (keys), allowing you to access both the index and the corresponding value.
+
+// Note: While for...in can be used with arrays, it is generally recommended to use for...of or traditional for loops for array iteration to avoid unexpected behavior, especially if the array has additional properties added to it.
