@@ -49,3 +49,30 @@ console.table([{name: "Bob", age: 30}, {name: "Charlie", age: 35}]) // displays 
 
 
 // You can run JavaScript code in the browser using the browser's developer console. To open the console, you can usually press F12 or right-click on the webpage and select "Inspect" or "Inspect Element," then navigate to the "Console" tab. You can type JavaScript code directly into the console and execute it by pressing Enter.
+
+//Window object in JavaScript and difference between BOM and DOM 
+ 
+// The Window object in JavaScript represents the browser window or tab that contains the web page. It is the global object in a web browser environment and provides various properties and methods to interact with the browser, such as controlling the size of the window, opening new windows, and accessing browser-specific features.
+
+// BOM (Browser Object Model) and DOM (Document Object Model) are two different concepts in web development:
+// 1. BOM (Browser Object Model):
+// - BOM refers to the collection of objects provided by the web browser that allows interaction with the browser itself.
+// - It includes objects like Window, Navigator, Screen, History, and Location.
+// - BOM is responsible for handling browser-specific functionalities, such as managing browser history, controlling the browser window, and accessing information about the user's environment.
+// 2. DOM (Document Object Model):
+// - DOM refers to the structured representation of the HTML or XML document as a tree of objects.
+// - It allows developers to manipulate the content, structure, and style of a web page dynamically.
+// - DOM provides methods and properties to access and modify HTML elements, attributes, and text within the document.
+// In summary, BOM deals with browser-related functionalities, while DOM focuses on the structure and content of the web page itself. Both BOM and DOM are essential for creating interactive and dynamic web applications using JavaScript.
+// Problem 1: What will be the output of the following code?
+console.log(typeof null) 
+// Answer: "object" (This is a known quirk in JavaScript where null is considered an object type) 
+// Problem 2: What will be the output of the following code?
+console.log(typeof NaN) 
+// Answer: "number" (NaN stands for "Not-a-Number," but it is of type number in JavaScript) 
+// Problem 3: What will be the output of the following code?
+console.log(0.1 + 0.2 === 0.3) 
+// Answer: false (Due to floating-point precision issues in JavaScript, 0.1 + 0.2 does not exactly equal 0.3)
+// Problem 4: What will be the output of the following code?
+console.log([] + [])
+// Answer 
