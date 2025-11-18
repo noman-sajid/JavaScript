@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #473472; /* Deep violet background */
+    color: #D6F4ED; /* Very light cool accent for text */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #87BAC3; /* Header color */
+    letter-spacing: 1px;
+}
+
+.score-board {
+    border: 3px solid #53629E;
+    border-radius: 8px;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 2em;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.badge {
+    background-color: #87BAC3;
+    font-size: 0.7em;
+    padding: 2px 10px;
+    border-radius: 4px;
+    position: absolute;
+    color: #473472;
+    font-weight: bold;
+}
+
+#user-label {
+    top: 20px;
+    left: -25px;
+}
+
+#computer-label {
+    top: 20px;
+    right: -30px;
+}
+
+.result {
+    margin: 40px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.result p {
+    transition: color 0.3s, transform 0.3s;
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    gap: 30px; 
+    margin-top: 50px;
+}
+
+.choice {
+    background-color: #53629E; /* Base button color */
+    border: 4px solid #D6F4ED; 
+    border-radius: 50%;
+    padding: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.choice:hover {
+    background-color: #87BAC3; /* hover Effect */
+    border-color: #87BAC3;
+    box-shadow: 0 8px 15px rgba(135, 186, 195, 0.6);
+    transform: scale(1.05);
+}
+
+.choice i {
+    color: #D6F4ED; /* Icon color */
+    transition: color 0.3s;
+}
+
+.choice:hover i {
+    color: #473472; /* icon color change on hover */
+}
+
+
+
+/*win glow */
+.green-glow {
+    border: 4px solid #4CAF50 !important;
+    box-shadow: 0 0 15px #4CAF50 !important;
+}
+
+/* loose glow */
+.red-glow {
+    border: 4px solid #f44336 !important;
+    box-shadow: 0 0 15px #f44336 !important;
+}
+
+/* draw glow */
+.blue-glow {
+    border: 4px solid #2196F3 !important;
+    box-shadow: 0 0 15px #2196F3 !important;
+}
+
+
+/* Result text */
+
+.result.win p {
+    color: #4CAF50; 
+    transform: scale(1.1);
+}
+.result.lose p {
+    color: #f44336; 
+    transform: scale(1.1);
+}
+.result.draw p {
+    color: #2196F3;
+    transform: scale(1.1);
+}
