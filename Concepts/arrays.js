@@ -266,3 +266,6 @@ for (let index in arr) {
 // The for...in statement iterates over all enumerable properties of an object. When used with arrays, it loops through the array indices (keys), allowing you to access both the index and the corresponding value.
 
 // Note: While for...in can be used with arrays, it is generally recommended to use for...of or traditional for loops for array iteration to avoid unexpected behavior, especially if the array has additional properties added to it.
+
+//Difference between for...of and for...in with arrays and objects
+// for...of iterates over the values of an iterable object (like an array), while for...in iterates over the enumerable properties (keys) of an object.
