@@ -26,3 +26,26 @@
 //   }
 // </script>
 // 3. External JavaScript: You can create a separate JavaScript file with a .js extension and link it to your HTML document using the <script> tag with the "src" attribute.
+
+//JavaScript console methods 
+//What is console in JavaScript?
+// The console in JavaScript is a built-in object that provides access to the browser's debugging console. It allows developers to log information, warnings, errors, and other messages during the execution of JavaScript code. The console is commonly used for debugging purposes, as it helps developers track the flow of their code and identify issues.
+
+// Commonly used console methods in JavaScript:
+
+let a = "Philomena"
+console.log(a) // logs the value of a to the console
+
+console.warn("This is a warning message") // displays a warning message in the console
+
+console.error("This is an error message") // displays an error message in the console
+
+console.info("This is an informational message") // displays an informational message in the console
+
+console.object({name: "Alice", age: 25}) // displays an object in the console
+
+console.table([{name: "Bob", age: 30}, {name: "Charlie", age: 35}]) // displays data in a tabular format in the console
+
+
+
+// You can run JavaScript code in the browser using the browser's developer console. To open the console, you can usually press F12 or right-click on the webpage and select "Inspect" or "Inspect Element," then navigate to the "Console" tab. You can type JavaScript code directly into the console and execute it by pressing Enter.
