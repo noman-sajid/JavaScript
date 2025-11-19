@@ -19,3 +19,18 @@ document.body.appendChild(newParagraph);
 document.body.removeChild(myDiv);
 // These examples demonstrate how to use the DOM API to interact with and manipulate HTML elements on a webpage using JavaScript.
 
+// match() closest(), contains() meaning 
+// match(): it is a method used to compare and check if a css selector matches a given element or not. It returns the matched element if found otherwise returns null.
+// Example:
+let element = document.querySelector(".myClass");
+let isMatch = element.matches(".myClass"); // returns true if element has class 'myClass'
+
+// closest(): it is a method that traverses up the DOM tree from the current element and returns the nearest ancestor (including itself) that matches the specified selector. If no matching ancestor is found, it returns null.
+// Example:
+let childElement = document.querySelector(".child");
+let closestAncestor = childElement.closest(".parent"); // returns the nearest ancestor with class 'parent'
+// contains(): it is a method used to check if a node is a descendant of a specified node. It returns true if the node is a descendant, otherwise returns false.
+// Example:
+let parentElement = document.querySelector(".parent");
+let childElement2 = document.querySelector(".child");
+let isDescendant = parentElement.contains(childElement2); // returns true if childElement2 is a descendant of parentElement
