@@ -34,3 +34,28 @@ let closestAncestor = childElement.closest(".parent"); // returns the nearest an
 let parentElement = document.querySelector(".parent");
 let childElement2 = document.querySelector(".child");
 let isDescendant = parentElement.contains(childElement2); // returns true if childElement2 is a descendant of parentElement
+//Event Delegation in JS
+// Event delegation is a technique in JavaScript where a single event listener is added to a parent element to manage events for its child elements. Instead of attaching individual event listeners to each child element, the parent element listens for events that bubble up from its children. This approach improves performance and simplifies code management, especially when dealing with dynamic content where child elements may be added or removed frequently.
+// Example of Event Delegation:
+const container = document.getElementById("button-container");
+
+container.addEventListener("click", (e) => {
+  if (e.target.matches(".btn")) { // check if a button was clicked
+    alert(`You clicked ${e.target.textContent}`);
+  }
+});
+// In this example, a single click event listener is added to the container element. When any button inside the container is clicked, the event bubbles up to the container, and we check if the clicked target matches the button selector. This way, we can handle clicks for all buttons without adding separate listeners to each one.
+
+// Event Bubbling and Capturing in JS
+// Event Bubbling: In event bubbling, when an event is triggered on a child element, it first runs the event handler on that element, and then the event propagates (bubbles up) to its parent elements, triggering their event handlers in order until it reaches the root of the DOM tree.
+// Example of Event Bubbling:
+document.getElementById("parent").addEventListener("click", () => {
+  console.log("Parent clicked");
+});
+document.getElementById("child").addEventListener("click", (e) => {
+  console.log("Child clicked");
+  // e.stopPropagation(); // Uncommenting this will stop the bubbling
+});
+// If you click on the child element, the output will be:
+// Child clicked
+// Parent clicked
