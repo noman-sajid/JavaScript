@@ -25,3 +25,40 @@ let count = 1;
              clearInterval(intervalID)
         }
     }, 1000)
+
+// Start a counter with setInterval counting 1–10, But stop it manually when it reaches 3 using clearInterval.
+
+
+
+const intervalStop = setInterval(() => {
+    console.log(count);
+
+    if (count === 3) {
+        clearInterval(intervalStop);
+    }
+     count++;
+
+    if(count > 10){
+        clearInterval(intervalStop)
+    }
+}, 2000);
+
+//
+
+function countDown(num) {
+
+    console.log(num);
+
+    if (num <= 1) { 
+
+        return;
+    }
+
+    let nextNum = num - 1;
+
+    setTimeout(() => {
+        countDown(nextNum); 
+    }, 1000); 
+
+}
+countDown(5);
