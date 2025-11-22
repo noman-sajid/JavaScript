@@ -62,3 +62,23 @@ function countDown(num) {
 
 }
 countDown(5);
+
+
+
+// Write a program to show different alerts when different buttons are clicked
+
+function alertOne() {
+    alert("Button 1 was clicked!");
+}
+
+function alertTwo() {
+    alert("Button 2 was clicked!");
+}
+
+function alertThree() {
+    alert("Button 3 was clicked!");
+}
+
+document.getElementById("btn1").addEventListener("click", alertOne);
+document.getElementById("btn2").addEventListener("click", alertTwo);
+document.getElementById("btn3").addEventListener("click", alertThree);
