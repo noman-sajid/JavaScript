@@ -37,3 +37,19 @@ function getNamesSortedByAgeLoop(users) {
 
 
 
+//very basic problems
+
+for(let i = 0; i<=10 ; i++){
+   console.log(i)
+}
+
+for(let i = 1; i<= 100; i += 2){
+   console.log(i)
+}
+
+
+for(let i = 0 ; i <=10 ; i++){
+   let row = "7 *" + i + " =  " + 7 * i;
+   console.log(row)
+}
+
