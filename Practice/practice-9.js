@@ -53,3 +53,25 @@ for(let i = 0 ; i <=10 ; i++){
    console.log(row)
 }
 
+
+
+
+/* Print the multiplication 
+tables with numbers from 
+1 to 10*/
+
+for(let i = 1; i <= 10; i++){
+
+  tables(i)
+  console.log("")
+   
+}
+
+function tables(n){
+ 
+  for(let i = 0; i <=10 ; i++){
+    let row = n + " * " + i + " = " + n * i; 
+    console.log(row)
+  }
+  
+}
