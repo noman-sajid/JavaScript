@@ -8,9 +8,19 @@ body {
   background: linear-gradient(135deg, #1f1c2c, #928dab);
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: 'Segoe UI', sans-serif;
+  gap: 30px;
+}
+
+.heading {
+  font-size: 42px;
+  font-weight: bold;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .container {
@@ -47,19 +57,20 @@ body {
 }
 
 .ampm-indicator {
-    display: flex;
-    align-self: flex-start;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    padding: 5px 10px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #928dab; 
-    background: #ffffff; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}   
+  display: flex;
+  align-self: flex-start;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #928dab;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
 @keyframes blink {
   0%, 50%, 100% { opacity: 1; }
   25%, 75% { opacity: 0.2; }
