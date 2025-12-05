@@ -60,3 +60,16 @@ addAsyncSafe("3", 2)
   });
 
     
+
+  // problem 3 : Return a Promise Resolve with "Done" after 2 seconds with a function
+
+  function waitAndResolve(){
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve("Done")
+}, 2000)
+    })
+}
+
+waitAndResolve().then(msg => console.log(msg));
+
