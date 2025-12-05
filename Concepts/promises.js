@@ -3,7 +3,7 @@
 
 // Creating a Promise
 const myPromise = new Promise((resolve, reject) => {
-  const success = true; // Simulating an asynchronous operation
+    const success = true; // Simulating an asynchronous operation
     setTimeout(() => {
         if (success) {
             resolve("Operation completed successfully!");
@@ -16,58 +16,58 @@ const myPromise = new Promise((resolve, reject) => {
 
 //Problem 1 : add two numbers using promise and log the result.
 function addAsync(a, b) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(a + b);
-    }, 1000);
-  });
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(a + b);
+        }, 1000);
+    });
 }
 
 addAsync(5, 10)
-  .then((result) => {
-    console.log("Sum:", result); // Output: Sum: 15
+    .then((result) => {
+        console.log("Sum:", result); // Output: Sum: 15
     })
 // Problem 2 : add input validation to Problem 1
 
 function addAsyncSafe(a, b) {
-  return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-    if (typeof a !== "number" || typeof b !== "number") {
-      reject(new Error("Invalid input: Both values must be numbers"));
-      return;
-    }
+        if (typeof a !== "number" || typeof b !== "number") {
+            reject(new Error("Invalid input: Both values must be numbers"));
+            return;
+        }
 
-    setTimeout(() => {
-      resolve(a + b);
-    }, 1000);
-  });
+        setTimeout(() => {
+            resolve(a + b);
+        }, 1000);
+    });
 }
 
 addAsyncSafe(10, 20)
-  .then((result) => {
-    console.log(result); // 30
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
+    .then((result) => {
+        console.log(result); // 30
+    })
+    .catch((error) => {
+        console.log(error.message);
+    });
 
 addAsyncSafe("3", 2)
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((error) => {
+        console.log(error.message);
+    });
 
-    
 
-  // problem 3 : Return a Promise Resolve with "Done" after 2 seconds with a function
 
-  function waitAndResolve(){
-    return new Promise((resolve, reject)=>{
-        setTimeout(()=>{
+// problem 3 : Return a Promise Resolve with "Done" after 2 seconds with a function
+
+function waitAndResolve() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
             resolve("Done")
-}, 2000)
+        }, 2000)
     })
 }
 
@@ -76,16 +76,38 @@ waitAndResolve().then(msg => console.log(msg));
 
 // Problem : check if age is appropriatte and then return a promise based on that 
 
-function checkAge(age){
-    return new Promise((resolve, reject)=>{
-        if(age >= 18 ){
-        resolve("Access granted")
-        } else{
-        reject(new Error("Acess Denied"));
-        return
+function checkAge(age) {
+    return new Promise((resolve, reject) => {
+        if (age >= 18) {
+            resolve("Access granted")
+        } else {
+            reject(new Error("Acess Denied"));
+            return
         }
     })
 }
 
-checkAge(15).then((res)=>res).catch((error)=>{console.log(error.message)})
+checkAge(15).then((res) => res).catch((error) => { console.log(error.message) })
+
+
+
+// Problem 5 : divide two numbers using promise and handle division by zero error and Nan error
+
+function divideAsync(a, b) {
+    return new Promise((resolve, reject) => {
+        if (typeof a !== 'number' || typeof b !== 'number') {
+            reject(new Error("Invalid input"))
+        }
+        else if (b === 0) {
+            reject(new Error("Cannot divide by zero"))
+            return;
+        } else {
+            resolve(a / b)
+        }
+    })
+}
+
+divideAsync(10, 2).then((res) => { console.log(res) }).catch((error) => { console.log(error.message) });
+divideAsync(10, 0).then((res) => { console.log(res) }).catch((error) => { console.log(error.message) });
+
 
