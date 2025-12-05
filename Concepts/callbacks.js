@@ -45,3 +45,22 @@ function greetingMsg(messege){
 
 greetUser("Alice", greetingMsg)
 
+
+// Problem 2: create a fuction called calculate takes two numbers and a callback function then add the numbers and write call back one logs the sum and other one multiplies the sum by 2 and logs the result.
+
+function calculate(a, b, callback){
+  let result = a + b;
+  callback(result)
+}
+
+function logFunc(result){
+   console.log(result);
+};
+
+function multiplyFunc(result){
+  let multiplied =  result * 2 ; 
+  console.log(multiplied)
+}
+
+calculate(2, 4 ,logFunc)
+calculate(2, 4 , multiplyFunc)
