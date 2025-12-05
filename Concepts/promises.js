@@ -13,6 +13,45 @@ const myPromise = new Promise((resolve, reject) => {
     }, 2000);
 });
 
+//Promise Consumption
+myPromise
+    .then((result) => {
+        console.log(result); // Output: Operation completed successfully!
+    })
+    .catch((error) => {
+        console.log(error); // Output: Operation failed.
+    })
+    .finally(() => {
+        console.log("Promise has been settled (either resolved or rejected).");
+    });
+
+// Promise API Methods
+const promise1 = Promise.resolve(42);
+const promise2 = Promise.reject("An error occurred.");
+const promise3 = new Promise((resolve) => setTimeout(() => resolve("Done after 1 second"), 1000));
+Promise.all([promise1, promise3])
+    .then((results) => {
+        console.log("All promises resolved:", results); // Output: All promises resolved: [42, "Done after 1 second"]
+    })
+    .catch((error) => {
+        console.log("One of the promises rejected:", error);
+    });
+
+Promise.race([promise3, promise2])
+    .then((result) => {
+        console.log("First promise resolved:", result);
+    })
+    .catch((error) => {
+        console.log("First promise rejected:", error); // Output: First promise rejected: An error occurred.
+    });
+  //list of promice api methods and their uses
+  // 1. Promise.resolve(value): Returns a Promise that is resolved with the given value.
+  // 2. Promise.reject(reason): Returns a Promise that is rejected with the given reason.
+  // 3. Promise.all(iterable): Returns a Promise that resolves when all of the Promises in the iterable have resolved, or rejects if any of them reject.
+  // 4. Promise.race(iterable): Returns a Promise that resolves or rejects as soon as one of the Promises in the iterable resolves or rejects.
+  // 5. Promise.allSettled(iterable): Returns a Promise that resolves after all of the given Promises have either resolved or rejected, with an array of objects that each describes the outcome of each Promise.
+  // 6. Promise.any(iterable): Returns a Promise that resolves as soon as any of the Promises in the iterable resolves, or rejects if all of them reject.      
+
 
 //Problem 1 : add two numbers using promise and log the result.
 function addAsync(a, b) {
