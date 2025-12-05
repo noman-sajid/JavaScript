@@ -28,3 +28,20 @@ function showGreeting(message){
    console.log(message);
 }
 greetUser("Alice", showGreeting); // Output: Hello, Alice! Welcome back.
+
+// with timeout
+ 
+function greetUser(user, callback){
+    let messege = `Hello ${user}!`
+
+    setTimeout(()=>{
+        callback(messege)
+    }, 1000)
+}
+
+function greetingMsg(messege){
+   console.log(messege)
+}
+
+greetUser("Alice", greetingMsg)
+
