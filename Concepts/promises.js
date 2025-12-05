@@ -12,3 +12,20 @@ const myPromise = new Promise((resolve, reject) => {
         }
     }, 2000);
 });
+
+
+//Problem 1 : add two numbers using promise and log the result.
+function addAsync(a, b) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(a + b);
+    }, 1000);
+  });
+}
+
+addAsync(5, 10)
+  .then((result) => {
+    console.log("Sum:", result); // Output: Sum: 15
+    })
+
+    
