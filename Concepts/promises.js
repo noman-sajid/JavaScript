@@ -27,5 +27,36 @@ addAsync(5, 10)
   .then((result) => {
     console.log("Sum:", result); // Output: Sum: 15
     })
+// Problem 2 : add input validation to Problem 1
+
+function addAsyncSafe(a, b) {
+  return new Promise((resolve, reject) => {
+
+    if (typeof a !== "number" || typeof b !== "number") {
+      reject(new Error("Invalid input: Both values must be numbers"));
+      return;
+    }
+
+    setTimeout(() => {
+      resolve(a + b);
+    }, 1000);
+  });
+}
+
+addAsyncSafe(10, 20)
+  .then((result) => {
+    console.log(result); // 30
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
+
+addAsyncSafe("3", 2)
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
 
     
