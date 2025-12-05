@@ -73,3 +73,19 @@ addAsyncSafe("3", 2)
 
 waitAndResolve().then(msg => console.log(msg));
 
+
+// Problem : check if age is appropriatte and then return a promise based on that 
+
+function checkAge(age){
+    return new Promise((resolve, reject)=>{
+        if(age >= 18 ){
+        resolve("Access granted")
+        } else{
+        reject(new Error("Acess Denied"));
+        return
+        }
+    })
+}
+
+checkAge(15).then((res)=>res).catch((error)=>{console.log(error.message)})
+
