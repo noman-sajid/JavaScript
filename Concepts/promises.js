@@ -204,3 +204,32 @@ async function fastServer(){
 }  
 
 fastServer()
+
+
+// Problem 3 : Create three Primises and then return complete result 
+
+
+function a(){
+    return new Promise((resolve, reject)=>{
+        resolve("This is first resolved Promise")
+    })
+}
+
+function b(){
+    return new Promise((resolve, reject)=>{
+        reject("This is a rejected Promise")
+    })
+}
+
+function c(){
+    return new Promise((resolve, reject)=>{
+        resolve("This is second resolved Promise")
+    })
+}
+
+async function resAllSettled(){
+   const res = await Promise.allSettled([a, b, c])
+   console.log(res)
+}
+
+resAllSettled()
