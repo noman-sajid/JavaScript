@@ -150,3 +150,31 @@ divideAsync(10, 2).then((res) => { console.log(res) }).catch((error) => { consol
 divideAsync(10, 0).then((res) => { console.log(res) }).catch((error) => { console.log(error.message) });
 
 
+
+
+// Promise Api Problems 
+
+// Problem : Create two async functions use promise api to return result of both
+
+   function addAsync(a, b){
+      return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve(a + b)
+        }, 1000);
+      })
+   }
+
+   function addAsync(a, b){
+      return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve(a + b)
+        }, 2000);
+      })
+   }
+
+async function addAll(){
+    const result = await Promise.all([addAsync(2, 3), addAsync(5, 5)])
+    console.log(result)
+}  
+
+addAll()
