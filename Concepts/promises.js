@@ -178,3 +178,29 @@ async function addAll(){
 }  
 
 addAll()
+
+
+// Problem 2 : create two functions resolving in 1 and 3 seconds and return the faster one
+
+function serverA(){
+      return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve("Server A")
+        }, 3000);
+      })
+   }
+
+   function serverB(){
+      return new Promise ((resolve, reject) => {
+        setTimeout(() => {
+            resolve("Server B")
+        }, 1000);
+      })
+   }
+
+async function fastServer(){
+    const result = await Promise.race([serverA(), serverB()])
+    console.log(result)
+}  
+
+fastServer()
