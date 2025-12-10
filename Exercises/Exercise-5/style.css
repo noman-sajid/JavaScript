@@ -22,7 +22,7 @@ body {
 }
 
 .terminal-header {
-    background: linear-gradient(90deg, #00ff99, #00ccff);
+    background: greenyellow;
     color: #000;
     padding: 10px;
     font-weight: bold;
@@ -46,7 +46,7 @@ button {
     width: 100%;
     padding: 14px;
     border: none;
-    background: linear-gradient(90deg, #00ff99, #00ccff);
+    background: #00f500;
     color: #000;
     font-size: 16px;
     font-weight: bold;
