@@ -1,0 +1,165 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #e6e9f0;
+    color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-top: 50px;
+}
+
+.todo-app {
+    width: 90%;
+    max-width: 600px;
+    background: #e6e9f0;
+    padding: 45px;
+    border-radius: 25px;
+    box-shadow:
+        10px 10px 20px #c8cedb,
+        -10px -10px 20px #ffffff;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+/* SingleRow input and button contianer */
+.input-row {
+    display: flex;
+    gap: 15px; 
+    margin-bottom: 30px;
+}
+
+#task-input {
+    flex-grow: 1;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1em;
+    background: #e6e9f0;
+    color: #2c3e50;
+    box-shadow:
+        inset 5px 5px 10px #c8cedb,
+        inset -5px -5px 10px #ffffff;
+    transition: all 0.3s;
+}
+
+#task-input::placeholder {
+    color: #aeb5c2;
+}
+
+#task-input:focus {
+    outline: none;
+    box-shadow:
+        inset 3px 3px 6px #b8c3d7,
+        inset -3px -3px 6px #ffffff;
+}
+
+#add-task-btn {
+    padding: 15px 25px;
+    background-color: #2c3e50; /* Deep Indigo primary color */
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow:
+        6px 6px 12px #c8cedb,
+        -6px -6px 12px #ffffff;
+    transition: all 0.3s;
+}
+
+#add-task-btn:hover {
+    background-color: #34495e;
+    box-shadow:
+        4px 4px 8px #c8cedb,
+        -4px -4px 8px #ffffff;
+}
+#add-task-btn:active {
+    background-color: #2c3e50;
+    box-shadow:
+        inset 4px 4px 8px #b8c3d7,
+        inset -4px -4px 8px #ffffff;
+}
+
+/* List Styling */
+#task-list {
+    list-style: none;
+    padding: 0;
+}
+
+#task-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    background: #e6e9f0;
+    border-radius: 15px;
+    box-shadow:
+        4px 4px 8px #c8cedb,
+        -4px -4px 8px #ffffff;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #95a5a6; /* Muted gray for completed text */
+    box-shadow:
+        inset 2px 2px 5px #c8cedb,
+        inset -2px -2px 5px #ffffff;
+    background: #f0f3f9;
+}
+
+/* Lis button container */
+#task-list li button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    border: none;
+    color: #2c3e50;
+    box-shadow:
+        3px 3px 6px #c8cedb,
+        -3px -3px 6px #ffffff;
+    transition: background-color 0.3s;
+}
+
+/* Mark button */
+#task-list li button:first-of-type {
+    background-color: #f39c12; 
+}
+#task-list li button:first-of-type:hover {
+    background-color: #d8890e;
+}
+
+/* Delete btn */
+.delete-btn {
+   background-color: #e74c3c;
+}
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

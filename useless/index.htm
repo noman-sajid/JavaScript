@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ay Duh Energy</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+    background-size: 400% 400%;
+    animation: gradient 8s ease infinite;
+    font-family: Comic Sans MS, cursive;
+    overflow: hidden;
+  }
+
+  @keyframes gradient {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  .container {
+    text-align: center;
+    cursor: pointer;
+  }
+
+  h1 {
+    font-size: 5rem;
+    color: #ff33aa;
+    text-shadow: 6px 6px 0px #fff, 10px 10px 0px #000;
+    transition: all 0.3s;
+    user-select: none;
+  }
+
+  .brain {
+    font-size: 15rem;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+  }
+
+  button {
+    
+    margin-top: 30px;
+    padding: 20px 40px;
+    font-size: 2rem;
+    background: #ff33aa;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    box-shadow: 0 10px 0 #c6007e;
+    cursor: pointer;
+    transition: all 0.1s;
+  }
+
+  button:active {
+    transform: translateY(10px);
+    box-shadow: 0 0px 0 #c6007e;
+  }
+</style>
+</head>
+<body>
+
+<body>
+  <div class="container" onclick="explode()">
+    <div class="brain">🧠</div>
+    <h1 id="text">perfectly normal</h1>
+    <button>poke the brain</button>
+  </div>
+
+  <script>
+    const phrases = [
+      "loading 47 tabs...",
+      "wait what were we talking about",
+      "sarcasm detected... failed to process",
+      "out of sight out of mind activated",
+      "hyperfocus go brrr",
+      "why is everyone laughing",
+      "miss people? never heard of her",
+      "AY DUH",
+      "brain.exe has stopped working",
+      "social battery: -47%",
+      "i said that out loud didn't i",
+      "new special interest just dropped",
+      "same foods same foods same foods",
+      "wait that's not how neurotypicals work??",
+      "TOO MANY WORDS COMING OUT",
+      "🚨 EXECUTIVE DYSFUNCTION 🚨",
+      "masking level: professional clown",
+      "dopamine please come home",
+      "AuDHD supreme edition unlocked",
+      "error 404: chill not found"
+    ];
+
+    let clickCount = 0;
+
+    function explode() {
+      clickCount++;
+
+      const text = document.getElementById("text");
+      text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+
+      // make it grow and change color with every click
+      text.style.fontSize = (5 + clickCount * 0.5) + "rem";
+      text.style.color = `hsl(${Math.random()*360}, 100%, 60%)`;
+
+      // spawn flying brains
+      for(let i = 0; i < 8; i++) {
+        const brain = document.createElement("div");
+        brain.textContent = "🧠";
+        brain.style.position = "fixed";
+        brain.style.fontSize = "4rem";
+        brain.style.left = Math.random() * 100 + "vw";
+        brain.style.top = Math.random() * 100 + "vh";
+        brain.style.pointerEvents = "none";
+        brain.style.animation = "fly 3s forwards";
+        document.body.appendChild(brain);
+
+        setTimeout(() => brain.remove(), 3000);
+      }
+
+      // ultimate chaos after 20 clicks
+      if(clickCount > 20) {
+        document.body.style.transform = "rotate(180deg)";
+        text.textContent = "CONGRATS YOU BROKE IT";
+        setTimeout(() => alert("take your meds king 💊❤️"), 500);
+      }
+    }
+
+    // secret easter egg: type "ayduh"
+    let keys = "";
+    document.addEventListener("keydown", e => {
+      keys += e.key.toLowerCase();
+      if(keys.includes("ayduh")) {
+        document.body.innerHTML = "<h1 style='font-size:15rem;text-align:center;margin-top:40vh;color:#ff33aa'>AY DUHHHHH 🧠💥</h1>";
+        setTimeout(() => location.reload(), 3000);
+      }
+    });
+  </script>
+
+  <style>
+    @keyframes fly {
+      0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(calc(50vw - 50%), calc(-100vh - 50%)) rotate(1080deg); opacity: 0; }
+    }
+  </style>
+</body>
+</html>
