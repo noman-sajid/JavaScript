@@ -143,3 +143,14 @@ person1.job("Engineer"); // Output: Alice is a Engineer.
 // In summary, constructors are special methods used to initialize objects when they are created, while methods define the actions that objects can perform.
 
 
+// one liner! 
+// Classes define the blueprint for creating objects.
+// Objects are instances of classes.
+// Classes can have constructors and methods.
+// Constructors define what an object must have to exist.
+// Methods define what an object can gain later.
+// The this keyword refers to the current instance of the class.
+// Together, classes and objects enable structured and reusable code in JavaScript.
+// this keyword is like this === object itself inside class methods.
+// this keyword inside constructor refers to the newly created object.
+// this keyword could mean different things in different contexts, but inside class methods and constructors, it typically refers to the instance of the class.
