@@ -34,20 +34,48 @@ const car = {
 
 // simple example 
 
+// class RailwayTicket {
+//     submit(){
+//         alert("Ticket Submitted");
+//     }
+//     cancel(){
+//         alert("Ticket Canceled");
+//     }
+// }
+
+// let alice = new RailwayTicket();
+// let bob = new RailwayTicket();
+
+// alice.submit();
+// bob.submit();
+// alice.cancel();
+
+// In this example, RailwayTicket is a class with two methods: submit and cancel. Alice and Bob are objects (instances) of the RailwayTicket class, and they can call the methods defined in the class.
+
+//this keyword in context of classes and objects
+// The this keyword in JavaScript refers to the object that is currently executing the code. In the context of classes and objects, this typically refers to the instance of the class that is calling a method or accessing a property.
 class RailwayTicket {
     submit(){
-        alert("Ticket Submitted");
+        alert(this.name +  ": Your Form is submited");
     }
     cancel(){
-        alert("Ticket Canceled");
+        alert(this.name +  ": Your Form is cancelled");
+    }
+    fill(name){
+      this.name = name;   
     }
 }
 
 let alice = new RailwayTicket();
 let bob = new RailwayTicket();
-
+alice.fill("Alice");
+bob.fill("Bob");
 alice.submit();
 bob.submit();
 alice.cancel();
 
-// In this example, RailwayTicket is a class with two methods: submit and cancel. Alice and Bob are objects (instances) of the RailwayTicket class, and they can call the methods defined in the class.
+
+//under the hood javaScript is doing:
+  this = alice
+  this.name = "Alice"
+  alert(this.name +  ": Your Form is submited");
