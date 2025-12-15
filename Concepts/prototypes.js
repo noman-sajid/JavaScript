@@ -53,3 +53,11 @@ console.log(child1.lastName); // Output: "Smith"
 
 // In this example, child1 inherits the firstName property from parent1 and the lastName property from grandParent through the prototype chain.
 
+// how __proto__ works
+console.log(child1.__proto__ === parent1); // true
+console.log(parent1.__proto__ === grandParent); // true
+console.log(grandParent.__proto__ === Object.prototype);
+
+// in more simple terms __proto__ is a hidden property that links an object to its prototype, allowing it to inherit properties and methods from that prototype.
+// and prototype is the actual object that serves as a template for creating new objects and providing inherited properties and methods.
+
