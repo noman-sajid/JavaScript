@@ -197,3 +197,38 @@ console.log("Employee Salary (Admin):", emp1.getSalary("admin")); // 5000
 // Testing Setter Validation
 mgr1.salary = -100; // Logs Error
 console.log("Manager Salary after invalid set:", mgr1.getSalary("admin")); // Still 7000
+
+
+/* Create a Person class with:
+
+name
+
+job
+
+Create a Student class that:
+
+accepts name and subject
+
+maps subject correctly using super()
+
+adds a method study()*/
+
+class Person {
+  constructor(name, job) {
+    this.name = name;
+    this.job = job;
+  }
+}
+
+class Student extends Person {
+  constructor(name, subject) {
+    super(name, "Student");
+    this.subject = subject;
+  }
+  study(){
+    console.log(`${this.name} is studying ${this.subject}`)
+  }
+}
+
+let student1 = new Student("Phillip", "Math")
+student1.study()
