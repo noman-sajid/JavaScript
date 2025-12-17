@@ -61,3 +61,65 @@ let s1 = new Student("Josh", 23)
 s1.walk()
 
 
+// Create a BankAccount class its  constructor takes ownerName and balance method deposit(amount) method withdraw(amount) (prevent withdrawal if balance is insufficient) method getBalance() that returns the balance
+
+class BankAccount{
+  constructor(ownerName, balance){
+    this.ownerName = ownerName;
+    this.balance = balance;
+  }
+  getBalance(){
+   return this.balance;
+  }
+  deposit(amount){
+     this.balance += amount
+  }
+  withdraw(amount){
+     if(this.balance < amount){
+       console.log("cannot withdraw! Insufficent funds!")
+     } else {
+       this.balance -= amount
+     }
+  }
+}
+
+const acc = new BankAccount("Alice", 1000);
+acc.deposit(500);
+acc.withdraw(300);
+console.log(acc.getBalance()); // 1200
+
+
+/* Create a TrainTicket class.
+
+Requirements:
+
+constructor takes passengerName and trainNo
+
+method submit()
+
+method cancel()
+
+method updateTrain(newTrainNo)
+
+Focus on using this correctly.*/
+
+class TrainTicket{
+    constructor(passengerName, trainNo){
+        this.passengerName = passengerName;
+        this.trainNo = trainNo;
+    }
+    submit(){
+     console.log(`Ticket is submitted. Your train number is ${this.trainNo}`)
+    }
+    cancel(){
+     console.log(`Ticket is cancelled`)
+    }
+    updateTrain(newTrainNo){
+        this.trainNo = newTrainNo;
+        console.log(`Train number is been updated! New number is ${newTrainNo}`)
+    }
+}
+
+let ticket1 = new TrainTicket("Alice", 4859)
+ticket1.submit();
+ticket1.updateTrain(2087)
