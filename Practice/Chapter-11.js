@@ -123,3 +123,77 @@ class TrainTicket{
 let ticket1 = new TrainTicket("Alice", 4859)
 ticket1.submit();
 ticket1.updateTrain(2087)
+
+
+/*Problem 3: Employee & Manager
+
+Create a parent class Employee.
+
+Requirements:
+
+constructor takes name and salary
+
+getter salary that returns "Confidential" unless user role is "admin"
+
+setter salary that only allows positive numbers
+
+Create a child class Manager.
+
+Additional requirements:
+
+constructor takes name, salary, and department
+
+override a method getRole() so it returns "Manager"*/
+
+
+class Employee {
+  constructor(name, salary) {
+    this._name = name;
+    this._salary = salary; 
+  }
+
+  getSalary(role) {
+    if (role !== "admin") {
+      return "Confidential";
+    }
+    return this._salary;
+  }
+
+  set salary(value) {
+    if (value < 0) {
+      console.log("Error: Salary cannot be less than 0");
+    } else {
+      this._salary = value;
+    }
+  }
+
+  getRole() {
+    return "Employee";
+  }
+}
+
+class Manager extends Employee {
+  constructor(name, salary, department) {
+    super(name, salary);
+    this._department = department;
+  }
+
+  getRole() {
+    return "Manager";
+  }
+}
+
+
+const emp1 = new Employee("Alice", 5000);
+const mgr1 = new Manager("Bob", 7000, "Engineering");
+
+console.log(`${emp1.name} is an ${emp1.getRole()}`);
+console.log(`${mgr1.name} is a ${mgr1.getRole()} in ${mgr1.department}`);
+
+// Testing Salary Access
+console.log("Employee Salary (User):", emp1.getSalary("user"));  // Confidential
+console.log("Employee Salary (Admin):", emp1.getSalary("admin")); // 5000
+
+// Testing Setter Validation
+mgr1.salary = -100; // Logs Error
+console.log("Manager Salary after invalid set:", mgr1.getSalary("admin")); // Still 7000
