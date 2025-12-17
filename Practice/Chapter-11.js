@@ -146,24 +146,26 @@ constructor takes name, salary, and department
 override a method getRole() so it returns "Manager"*/
 
 
+let currentUserRole = "user"; 
+
 class Employee {
   constructor(name, salary) {
-    this._name = name;
+    this.name = name;
     this._salary = salary; 
   }
 
-  getSalary(role) {
-    if (role !== "admin") {
-      return "Confidential";
+  get salary() {
+    if (currentUserRole === "admin") {
+      return this._salary;
     }
-    return this._salary;
+    return "Confidential";
   }
 
   set salary(value) {
-    if (value < 0) {
-      console.log("Error: Salary cannot be less than 0");
-    } else {
+    if (value > 0) {
       this._salary = value;
+    } else {
+      console.log("Error: Salary must be a positive number.");
     }
   }
 
@@ -174,9 +176,11 @@ class Employee {
 
 class Manager extends Employee {
   constructor(name, salary, department) {
+  
     super(name, salary);
-    this._department = department;
+    this.department = department;
   }
+
 
   getRole() {
     return "Manager";
@@ -184,19 +188,19 @@ class Manager extends Employee {
 }
 
 
-const emp1 = new Employee("Alice", 5000);
-const mgr1 = new Manager("Bob", 7000, "Engineering");
 
-console.log(`${emp1.name} is an ${emp1.getRole()}`);
-console.log(`${mgr1.name} is a ${mgr1.getRole()} in ${mgr1.department}`);
+const mgr = new Manager("Bob", 80000, "Sales");
 
-// Testing Salary Access
-console.log("Employee Salary (User):", emp1.getSalary("user"));  // Confidential
-console.log("Employee Salary (Admin):", emp1.getSalary("admin")); // 5000
+console.log(`Role: ${mgr.getRole()}`);
 
-// Testing Setter Validation
-mgr1.salary = -100; // Logs Error
-console.log("Manager Salary after invalid set:", mgr1.getSalary("admin")); // Still 7000
+currentUserRole = "user";
+console.log(`Salary (as user): ${mgr.salary}`);
+currentUserRole = "admin";
+console.log(`Salary (as admin): ${mgr.salary}`);
+
+mgr.salary = 85000; 
+mgr.salary = -100;  
+console.log(`New Salary: ${mgr.salary}`); 
 
 
 /* Create a Person class with:
