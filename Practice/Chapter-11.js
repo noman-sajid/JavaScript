@@ -237,6 +237,8 @@ class Student extends Person {
 let student1 = new Student("Phillip", "Math")
 student1.study()
 
+
+
 /* Create a Temperature class.
 
 Requirements:
@@ -322,3 +324,59 @@ class User {
 const me = new User(1995);
 console.log(me.age); // Returns your age (e.g., 30)
 me.birthYear = 2030; // Logs "Invalid birthYear!"
+
+
+/* Create a CreditCard class.
+
+Requirements:
+
+constructor takes number
+
+private storage _number
+
+getter number:
+
+returns only last 4 digits (e.g. **** **** **** 1234)
+
+setter number:
+
+only allows 16-digit numbers
+
+prevent direct access to full number*/
+
+class creditCard{
+   #number
+   constructor(number){
+      this.number = number;
+   }
+   get number(){
+    let str = this.#number.toString();  
+    let masked = str.split("")
+                  .fill("*", 0, str.length - 4) 
+                  .join("");
+     return masked 
+   }
+   set number(value){
+     let str = value.toString()
+      if(str.length > 16 || str.length < 16){
+        console.log("Number must be a 16 or less digit number")
+      }else{
+         this.#number = value.toString();
+      }
+   }
+ 
+}
+
+
+const myCard = new creditCard("1234567812345678");
+
+// Test 1: The Getter
+console.log(myCard.number); 
+
+// Test 2: Privacy Check
+console.log(myCard.number); 
+
+// Test 3: Validation Check
+myCard.number = "123"; 
+
+
