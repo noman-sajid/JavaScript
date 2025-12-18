@@ -236,3 +236,89 @@ class Student extends Person {
 
 let student1 = new Student("Phillip", "Math")
 student1.study()
+
+/* Create a Temperature class.
+
+Requirements:
+
+constructor takes celsius
+
+private storage _celsius
+
+getter celsius returns the value
+
+setter celsius:
+
+only allows values between -50 and 100
+
+rejects invalid values with a message*/
+
+class Temperature {
+  constructor(celsius) {
+    this._celsius = celsius;
+  }
+
+  get celsius() {
+    return this._celsius;
+  }
+
+  set celsius(value) {
+    
+    if (value <= -50 || value >= 100) {
+      console.log("Invalid Value!");
+    } else {
+      this._celsius = value;
+    }
+  }
+}
+
+const t = new Temperature(25);
+
+t.celsius = 120;   // rejected
+t.celsius = 30;    // accepted
+console.log(t.celsius); // 30
+
+
+/* Create a User class.
+
+Requirements:
+
+constructor takes birthYear
+
+private storage _birthYear
+
+getter age:
+
+calculates age dynamically (no stored age)
+
+no setter for age (read-only)
+
+setter for birthYear:
+
+rejects future years
+
+Goal: getter as derived data, not stored data.*/
+
+class User {
+  constructor(birthYear) {
+    this._birthYear = birthYear;
+  }
+
+  get age() {
+    const currentYear = new Date().getFullYear();
+    return currentYear - this._birthYear;
+  }
+
+  set birthYear(value) {
+    const currentYear = new Date().getFullYear();
+    if (value > currentYear) {
+      console.log("Invalid birthYear! Please Enter a valid Year!");
+    } else {
+      this._birthYear = value;
+    }
+  }
+}
+
+const me = new User(1995);
+console.log(me.age); // Returns your age (e.g., 30)
+me.birthYear = 2030; // Logs "Invalid birthYear!"
