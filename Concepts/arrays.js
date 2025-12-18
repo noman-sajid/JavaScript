@@ -269,3 +269,20 @@ for (let index in arr) {
 
 //Difference between for...of and for...in with arrays and objects
 // for...of iterates over the values of an iterable object (like an array), while for...in iterates over the enumerable properties (keys) of an object.
+
+
+
+
+
+
+let number = 1231231232312312;
+console.log(number)
+let numArr = number.toString().split("")
+
+for(let i = 0; i < numArr.length - 4 ; i++){
+ numArr[i] = "*"
+  
+}
+
+let maskedStr = numArr.join("");
+console.log(maskedStr)
