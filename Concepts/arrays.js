@@ -275,14 +275,26 @@ for (let index in arr) {
 
 
 
-let number = 1231231232312312;
-console.log(number)
-let numArr = number.toString().split("")
+// let number = 1231231232312312;
 
-for(let i = 0; i < numArr.length - 4 ; i++){
- numArr[i] = "*"
-  
-}
+// let numArr = number.toString().split("")
 
-let maskedStr = numArr.join("");
-console.log(maskedStr)
+// for(let i = 0; i < numArr.length - 4 ; i++){
+//  numArr[i] = "*"
+// }
+
+// let maskedStr = numArr.join("");
+//  // Output: ************2312
+
+
+
+//  let number = "1231231232312312"; // Using a string to avoid the precision issue
+
+// let masked = number.split("")
+//                    .fill("*", 0, number.length - 4)
+//                    .join("");
+
+// console.log(masked);
+
+let numStr = "1231231232312312";
+let masked = numStr.slice(-4).padStart(numStr.length, "*");
