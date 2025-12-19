@@ -83,4 +83,53 @@ console.log("Electric Car:", myTesla.info());
 const badCar = new ElectricCar("Bolt", 0, 500); 
 console.log("Bad Input Car:", badCar.info());
 
-/* 
+/*  Task: LibraryBook
+
+Requirements:
+
+constructor takes title, author
+
+private field #borrowed (boolean, starts false)
+
+getter status
+
+returns "Available" or "Borrowed"
+
+method borrow()
+
+only works if not already borrowed
+
+method returnBook()*/
+
+
+class LiberaryBook{
+  #borrowed = false
+  constructor(title, auther, borrowed){
+    this.title = title; 
+    this.auther = auther;
+   
+  }
+  get status(){
+      return this.#borrowed ? "Available" : "Borrowed";
+  }
+ borrow() {
+    if (!this.#borrowed) {
+      this.#borrowed = true;
+    } else {
+      console.log(`${this.title} is already borrowed.`);
+    }
+  }
+
+returnBook() {
+    this.#borrowed = false;
+  }
+
+}
+
+const myBook = new LiberaryBook("The Great Gatsby", "F. Scott Fitzgerald");
+console.log(myBook.status); // "Available"
+myBook.borrow();
+console.log(myBook.status); // "Borrowed"
+myBook.returnBook();
+console.log(myBook.status); // "Available"
+
