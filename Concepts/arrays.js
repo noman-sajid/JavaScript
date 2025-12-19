@@ -288,13 +288,29 @@ for (let index in arr) {
 
 
 
-//  let number = "1231231232312312"; // Using a string to avoid the precision issue
+// let number = 1231231232312312;
+
+// let numStr = number.toString()
 
 // let masked = number.split("")
 //                    .fill("*", 0, number.length - 4)
 //                    .join("");
 
 // console.log(masked);
+// //Output: ************2312
 
-let numStr = "1231231232312312";
-let masked = numStr.slice(-4).padStart(numStr.length, "*");
+// let number = 1231231232312312;
+
+// let numStr = number.toString()
+
+// let masked = numStr.slice(-4).padStart(numStr.length, "*");
+
+// console.log(masked); // ************2312
+
+
+
+let number = 1231231232312312;
+
+let masked = number.toString().replace(/\d(?=\d{4})/g, "*");
+
+console.log(masked); // ************2312
