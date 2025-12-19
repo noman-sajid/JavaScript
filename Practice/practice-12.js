@@ -133,3 +133,91 @@ console.log(myBook.status); // "Borrowed"
 myBook.returnBook();
 console.log(myBook.status); // "Available"
 
+
+/*Task: User → Admin
+
+User:
+
+constructor takes username, password
+
+private field #password
+
+getter password
+
+returns "******"
+
+method login(inputPassword)
+
+checks password correctly
+
+Admin (extends User):
+
+constructor adds role
+
+override login()
+
+logs extra message if admin
+
+static method isStrongPassword(pwd)
+
+returns true if:
+
+≥ 8 chars
+
+contains number
+
+contains symbol*/
+
+
+
+class User {
+  #password;
+
+  constructor(username, password) {
+    this.username = username;
+    this.#password = password;
+  }
+
+  get password() {
+    return "******";
+  }
+
+  login(inputPassword) {
+    return this.#password === inputPassword;
+  }
+}
+
+class Admin extends User {
+  constructor(username, password, role) {
+    super(username, password);
+    this.role = role;
+  }
+
+  login(inputPassword) {
+    const isValid = super.login(inputPassword);
+    if (isValid) {
+      console.log(`Admin login successful. Welcome, ${this.username}. Role: ${this.role}`);
+    }
+    return isValid;
+  }
+
+  static isStrongPassword(pwd) {
+    if (!pwd || typeof pwd !== 'string') return false;
+
+    const hasMinLength = pwd.length >= 8;
+    
+    const chars = pwd.split("");
+    const hasNumber = chars.some(char => "0123456789".includes(char));
+    const hasSymbol = chars.some(char => "!@#$%^&*()_+-=[]{}|;:,.<>?".includes(char));
+
+    return hasMinLength && hasNumber && hasSymbol;
+  }
+}
+
+// Example usage:
+const adminUser = new Admin("boss_mode", "Secure123!", "SuperAdmin");
+
+console.log(adminUser.password); // "******" (masked)
+adminUser.login("Secure123!");   // Logs: "Admin login successful..."
+console.log(Admin.isStrongPassword("weak"));       // false
+console.log(Admin.isStrongPassword("StrongPass1!")); // true
