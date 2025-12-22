@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volcano Run: 2D Edition</title>
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: linear-gradient(to bottom, #1a0500, #0a0000);
+            font-family: 'Segoe UI', sans-serif; 
+            color: white;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
+            padding: 20px; 
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        .hud-top { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 69, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        #stats-container { text-align: right; }
+        .heart { 
+            color: #ff3333; 
+            font-size: 30px; 
+            filter: drop-shadow(0 0 8px rgba(255,0,0,0.7)); 
+            display: inline-block;
+            margin: 0 3px;
+        }
+        .heart.empty {
+            opacity: 0.2;
+            filter: none;
+        }
+        #score-label { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            color: white; 
+            margin: 0; 
+            line-height: 1; 
+            font-style: italic;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        #best-label { 
+            font-size: 0.95rem; 
+            color: #ffaa00; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        
+        #game-over {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(20, 0, 0, 0.95);
+            color: white;
+            padding: 50px;
+            border-radius: 30px;
+            text-align: center;
+            display: none;
+            border: 2px solid #ff4500;
+            box-shadow: 0 0 50px rgba(255, 69, 0, 0.4);
+            z-index: 100;
+            pointer-events: auto;
+            max-width: 90%;
+            width: 500px;
+        }
+        #game-over h1 {
+            font-size: 3.5rem;
+            margin: 0 0 15px;
+            color: #ff2200;
+            text-shadow: 0 0 20px rgba(255, 34, 0, 0.6);
+        }
+        #game-over p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        #final-score-container {
+            margin: 30px 0;
+        }
+        #final-score-label {
+            font-size: 1rem;
+            color: #ffaa00;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        #final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        button {
+            background: linear-gradient(135deg, #ff4500, #ff0000);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+        }
+        button:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 69, 0, 0.6);
+            background: linear-gradient(135deg, #ff5500, #ff2200);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        canvas { 
+            display: block; 
+            filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.2));
+        }
+        
+        /* Mobile controls */
+        #mobile-controls {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: none;
+            justify-content: center;
+            gap: 20px;
+            z-index: 15;
+        }
+        
+        .control-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 69, 0, 0.3);
+            border: 2px solid #ff4500;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            pointer-events: auto;
+            user-select: none;
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .jump-btn {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            width: 80px;
+            height: 80px;
+            font-size: 1.8rem;
+            display: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hud-top {
+                padding: 12px 15px;
+            }
+            
+            #game-title {
+                font-size: 1.8rem !important;
+            }
+            
+            .controls-hint {
+                font-size: 0.85rem !important;
+            }
+            
+            #score-label {
+                font-size: 2.8rem !important;
+            }
+            
+            #mobile-controls {
+                display: flex;
+            }
+            
+            .jump-btn {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #score-label {
+                font-size: 2.2rem !important;
+            }
+            
+            .control-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6rem;
+            }
+            
+            .jump-btn {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-overlay">
+        <div class="hud-top">
+            <div>
+                <h1 id="game-title" style="color: #ff4500; margin: 0; font-style: italic; letter-spacing: -1px; font-size: 2.2rem;">VOLCANO RUN 2D</h1>
+                <p class="controls-hint" style="color: rgba(255,255,255,0.7); margin: 5px 0; font-size: 0.95rem;">ARROWS or WASD to Run | SPACE to Jump</p>
+            </div>
+            <div id="stats-container">
+                <div id="hearts"></div>
+                <div id="score-label">0</div>
+                <div id="best-label">Best: 0</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-controls">
+        <div class="control-btn" id="left-btn">←</div>
+        <div class="control-btn" id="right-btn">→</div>
+        <div class="control-btn jump-btn" id="jump-btn">JUMP</div>
+    </div>
+
+    <div id="game-over">
+        <h1>BURNED!</h1>
+        <p>You couldn't handle the heat.</p>
+        <div id="final-score-container">
+            <div id="final-score-label">High Score</div>
+            <div id="final-score">0</div>
+        </div>
+        <button onclick="resetGame()">RESPAWN</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        /**
+         * LEVEL REGISTRY (Twist): Modular design for new levels
+         * Add a new object here to change theme, colors, and difficulty.
+         */
+        const LEVEL_THEMES = {
+            VOLCANO: {
+                bg: 0x1a0500,
+                lava: 0xff2200,
+                platform: 0x333333,
+                accent: 0xff4500,
+                gravity: 42,
+                jumpPower: 16
+            },
+            ICE: {
+                bg: 0x001a33,
+                lava: 0x00ffff,
+                platform: 0xffffff,
+                accent: 0x00aaff,
+                gravity: 30,
+                jumpPower: 14
+            }
+        };
+
+        let currentTheme = LEVEL_THEMES.VOLCANO;
+        let scene, camera, renderer, player, playerVisual, lava;
+        let moveLeft = false, moveRight = false, canJump = false;
+        let velocity = new THREE.Vector2(0, 0);
+        let platforms = [];
+        let score = 0, hearts = 3, bestScore = 0;
+        let gameActive = true;
+        let nextPlatformX = 0;
+        let prevTime = performance.now();
+        let lavaMaterial;
+        let cameraTarget = new THREE.Vector3();
+        
+        // Mobile touch controls
+        let touchMap = {};
+
+        function init() {
+            // Create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(currentTheme.bg);
+            scene.fog = new THREE.FogExp2(currentTheme.bg, 0.05);
+
+            // Create camera
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 4, 15);
+
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.body.appendChild(renderer.domElement);
+
+            // Add lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            const sunLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            sunLight.position.set(5, 10, 7);
+            sunLight.castShadow = true;
+            scene.add(sunLight);
+
+            // Create game objects
+            createPlayer();
+            createLava();
+            spawnInitialPlatforms();
+            updateHeartsUI();
+            setupEventListeners();
+            
+            // Start animation loop
+            animate();
+        }
+
+        function createPlayer() {
+            player = new THREE.Group();
+            playerVisual = new THREE.Group();
+
+            // Player body with better materials
+            const bodyMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x2244ff,
+                metalness: 0.3,
+                roughness: 0.4
+            });
+            const body = new THREE.Mesh(
+                new THREE.BoxGeometry(0.7, 0.9, 0.5),
+                bodyMaterial
+            );
+            body.position.y = 0.45;
+            body.castShadow = true;
+            playerVisual.add(body);
+
+            // Player head with better materials
+            const headMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffdbac,
+                metalness: 0.1,
+                roughness: 0.7
+            });
+            const head = new THREE.Mesh(
+                new THREE.BoxGeometry(0.5, 0.5, 0.5),
+                headMaterial
+            );
+            head.position.y = 1.15;
+            head.castShadow = true;
+            
+            // Add eyes for character
+            const eyeMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+            const leftEye = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), eyeMaterial);
+            leftEye.position.set(-0.15, 1.25, 0.26);
+            const rightEye = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), eyeMaterial);
+            rightEye.position.set(0.15, 1.25, 0.26);
+            
+            playerVisual.add(head, leftEye, rightEye);
+            player.add(playerVisual);
+            player.position.set(0, 2, 0);
+            scene.add(player);
+        }
+
+        function createLava() {
+            const lavaGeo = new THREE.BoxGeometry(2000, 2, 10);
+            lavaMaterial = new THREE.MeshStandardMaterial({ 
+                color: currentTheme.lava, 
+                emissive: currentTheme.lava,
+                emissiveIntensity: 1.5,
+                roughness: 0.9
+            });
+            lava = new THREE.Mesh(lavaGeo, lavaMaterial);
+            lava.position.y = -2;
+            scene.add(lava);
+
+            // Background "Wall" to make it feel 2D
+            const bgGeo = new THREE.PlaneGeometry(2000, 100);
+            const bgMat = new THREE.MeshStandardMaterial({ 
+                color: 0x050100,
+                side: THREE.DoubleSide
+            });
+            const backWall = new THREE.Mesh(bgGeo, bgMat);
+            backWall.position.z = -5;
+            scene.add(backWall);
+        }
+
+        function createPlatform(x, y, w) {
+            const geo = new THREE.BoxGeometry(w, 1.5, 2);
+            const mat = new THREE.MeshStandardMaterial({ 
+                color: currentTheme.platform, 
+                roughness: 0.8,
+                metalness: 0.2
+            });
+            const platform = new THREE.Mesh(geo, mat);
+            platform.position.set(x, y - 0.75, 0);
+            platform.receiveShadow = true;
+            scene.add(platform);
+            platforms.push(platform);
+        }
+
+        function spawnInitialPlatforms() {
+            createPlatform(0, 0, 10); // Start
+            nextPlatformX = 10;
+            for (let i = 0; i < 15; i++) spawnNextPlatform();
+        }
+
+        function spawnNextPlatform() {
+            const w = Math.max(2, 3 + Math.random() * 4); // Minimum platform width
+            const gap = 4 + Math.random() * 5;
+            const y = (Math.random() - 0.5) * 4;
+            
+            nextPlatformX += gap;
+            createPlatform(nextPlatformX, y, w);
+        }
+
+        function setupEventListeners() {
+            // Keyboard controls
+            const onKey = (e, val) => {
+                if (!gameActive) return;
+                
+                switch (e.code) {
+                    case 'ArrowLeft': 
+                    case 'KeyA': 
+                        moveLeft = val; 
+                        break;
+                    case 'ArrowRight': 
+                    case 'KeyD': 
+                        moveRight = val; 
+                        break;
+                    case 'Space': 
+                        if (val && canJump) { 
+                            velocity.y = currentTheme.jumpPower; 
+                            canJump = false; 
+                        } 
+                        break;
+                }
+            };
+            
+            document.addEventListener('keydown', (e) => onKey(e, true));
+            document.addEventListener('keyup', (e) => onKey(e, false));
+            
+            // Mobile touch controls
+            const leftBtn = document.getElementById('left-btn');
+            const rightBtn = document.getElementById('right-btn');
+            const jumpBtn = document.getElementById('jump-btn');
+            
+            const touchStart = (dir, btn) => {
+                if (!gameActive) return;
+                touchMap[dir] = true;
+                btn.style.background = 'rgba(255, 69, 0, 0.6)';
+            };
+            
+            const touchEnd = (dir, btn) => {
+                touchMap[dir] = false;
+                btn.style.background = 'rgba(255, 69, 0, 0.3)';
+            };
+            
+            leftBtn.addEventListener('touchstart', () => touchStart('left', leftBtn));
+            leftBtn.addEventListener('touchend', () => touchEnd('left', leftBtn));
+            leftBtn.addEventListener('mousedown', () => touchStart('left', leftBtn));
+            leftBtn.addEventListener('mouseup', () => touchEnd('left', leftBtn));
+            leftBtn.addEventListener('mouseleave', () => touchEnd('left', leftBtn));
+            
+            rightBtn.addEventListener('touchstart', () => touchStart('right', rightBtn));
+            rightBtn.addEventListener('touchend', () => touchEnd('right', rightBtn));
+            rightBtn.addEventListener('mousedown', () => touchStart('right', rightBtn));
+            rightBtn.addEventListener('mouseup', () => touchEnd('right', rightBtn));
+            rightBtn.addEventListener('mouseleave', () => touchEnd('right', rightBtn));
+            
+            jumpBtn.addEventListener('touchstart', () => {
+                if (!gameActive) return;
+                if (canJump) {
+                    velocity.y = currentTheme.jumpPower;
+                    canJump = false;
+                    jumpBtn.style.background = 'rgba(255, 69, 0, 0.6)';
+                }
+            });
+            jumpBtn.addEventListener('touchend', () => {
+                jumpBtn.style.background = 'rgba(255, 69, 0, 0.3)';
+            });
+            jumpBtn.addEventListener('mousedown', () => {
+                if (!gameActive) return;
+                if (canJump) {
+                    velocity.y = currentTheme.jumpPower;
+                    canJump = false;
+                    jumpBtn.style.background = 'rgba(255, 69, 0, 0.6)';
+                }
+            });
+            jumpBtn.addEventListener('mouseup', () => {
+                jumpBtn.style.background = 'rgba(255, 69, 0, 0.3)';
+            });
+            jumpBtn.addEventListener('mouseleave', () => {
+                jumpBtn.style.background = 'rgba(255, 69, 0, 0.3)';
+            });
+            
+            // Window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function checkCollision() {
+            let onGround = false;
+            const pX = player.position.x;
+            const pY = player.position.y;
+
+            for (let i = 0; i < platforms.length; i++) {
+                const plat = platforms[i];
+                const halfW = plat.geometry.parameters.width / 2;
+                
+                // Check horizontal collision
+                if (pX > plat.position.x - halfW - 0.35 && pX < plat.position.x + halfW + 0.35) {
+                    const topY = plat.position.y + 0.75;
+                    
+                    // Check vertical collision (landing on platform)
+                    if (pY >= topY - 0.15 && pY <= topY + 0.3 && velocity.y <= 0) {
+                        onGround = true;
+                        velocity.y = 0;
+                        player.position.y = topY;
+                        canJump = true;
+
+                        // Score logic - score based on platform index
+                        if (!plat.userData.scored) {
+                            plat.userData.scored = true;
+                            score++;
+                            document.getElementById('score-label').innerText = score;
+                            
+                            // Spawn new platforms as needed
+                            if (platforms.length < score + 15) {
+                                spawnNextPlatform();
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Check if player fell into lava
+            if (pY < -1) {
+                takeDamage();
+            }
+            
+            // Clean up platforms that are too far behind
+            for (let i = platforms.length - 1; i >= 0; i--) {
+                if (platforms[i].position.x < player.position.x - 30) {
+                    scene.remove(platforms[i]);
+                    platforms.splice(i, 1);
+                }
+            }
+        }
+
+        function takeDamage() {
+            hearts--;
+            updateHeartsUI();
+            
+            if (hearts <= 0) {
+                endGame();
+            } else {
+                // Reset player to a safe position
+                velocity.set(0, 0);
+                
+                // Find the platform closest to the player's current position but not too far back
+                let safePlatform = platforms[0];
+                for (let i = 0; i < platforms.length; i++) {
+                    const plat = platforms[i];
+                    if (plat.position.x <= player.position.x && plat.position.x > player.position.x - 15) {
+                        safePlatform = plat;
+                        break;
+                    }
+                }
+                
+                player.position.set(safePlatform.position.x, safePlatform.position.y + 2, 0);
+            }
+        }
+
+        function updateHeartsUI() {
+            const heartsContainer = document.getElementById('hearts');
+            heartsContainer.innerHTML = '';
+            
+            for (let i = 0; i < 3; i++) {
+                const heart = document.createElement('span');
+                heart.className = 'heart ' + (i < hearts ? '' : 'empty');
+                heart.innerHTML = '❤';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        function endGame() {
+            gameActive = false;
+            
+            if (score > bestScore) {
+                bestScore = score;
+                document.getElementById('best-label').innerText = "Best: " + bestScore;
+            }
+            
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('game-over').style.display = 'block';
+        }
+
+        function resetGame() {
+            hearts = 3;
+            score = 0;
+            nextPlatformX = 10;
+            touchMap = {};
+            
+            updateHeartsUI();
+            document.getElementById('score-label').innerText = "0";
+            document.getElementById('game-over').style.display = 'none';
+            
+            // Remove all platforms
+            platforms.forEach(p => scene.remove(p));
+            platforms = [];
+            
+            // Recreate initial platforms
+            spawnInitialPlatforms();
+            
+            // Reset player position
+            player.position.set(0, 2, 0);
+            velocity.set(0, 0);
+            canJump = false;
+            
+            gameActive = true;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = performance.now();
+            const delta = Math.min((time - prevTime) / 1000, 0.1);
+
+            if (gameActive) {
+                // Apply gravity
+                velocity.y -= currentTheme.gravity * delta; 
+                
+                // Apply movement
+                const speed = 15;
+                let moveDir = (Number(moveRight || touchMap.right) - Number(moveLeft || touchMap.left));
+                player.position.x += moveDir * speed * delta;
+                player.position.y += velocity.y * delta;
+
+                // Character animation
+                if (moveDir !== 0) {
+                    // Flip character based on direction
+                    playerVisual.scale.x = moveDir > 0 ? 1 : -1;
+                    
+                    // Lean effect
+                    playerVisual.rotation.z = THREE.MathUtils.lerp(playerVisual.rotation.z, -moveDir * 0.15, 0.1);
+                } else {
+                    playerVisual.rotation.z = THREE.MathUtils.lerp(playerVisual.rotation.z, 0, 0.1);
+                }
+
+                // Check collisions
+                checkCollision();
+
+                // Camera follow with smooth movement
+                cameraTarget.x = player.position.x + 5;
+                cameraTarget.y = THREE.MathUtils.clamp(player.position.y + 2, 3, 8);
+                
+                camera.position.x = THREE.MathUtils.lerp(camera.position.x, cameraTarget.x, 0.1);
+                camera.position.y = THREE.MathUtils.lerp(camera.position.y, cameraTarget.y, 0.07);
+                camera.lookAt(camera.position.x, camera.position.y - 1, 0);
+
+                // Animate lava
+                lava.position.x = camera.position.x;
+                lavaMaterial.emissiveIntensity = 1.2 + Math.sin(time * 0.003) * 0.4;
+
+                prevTime = time;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        // Start the game when page loads
+        window.onload = init;
+    </script>
+</body>
+</html>

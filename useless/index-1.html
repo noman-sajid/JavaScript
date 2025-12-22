@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volcano Run: Enhanced 2D</title>
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: linear-gradient(to bottom, #000000, #330a00);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        canvas { 
+            display: block; 
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 20px; box-sizing: border-box;
+            z-index: 10;
+        }
+        .hud-top { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+        }
+        #stats-container { 
+            text-align: right; 
+            background: rgba(0,0,0,0.6);
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,69,0,0.3);
+        }
+        .hearts { display: flex; gap: 5px; justify-content: flex-end; margin-bottom: 10px; }
+        .heart { 
+            color: #ff3333; 
+            font-size: 28px; 
+            text-shadow: 0 0 10px rgba(255,0,0,0.7);
+            transition: all 0.3s;
+        }
+        .heart.lost { opacity: 0.3; }
+        #score-label { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            color: white; 
+            margin: 0; 
+            line-height: 1; 
+            font-style: italic;
+            text-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+        #best-label { 
+            font-size: 1rem; 
+            color: #ffaa00; 
+            font-weight: bold; 
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        
+        #game-over {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(20, 0, 0, 0.95);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            border: 2px solid #ff4500;
+            box-shadow: 0 0 40px rgba(255, 69, 0, 0.5);
+            z-index: 100;
+            pointer-events: auto;
+            min-width: 300px;
+        }
+        button {
+            background: linear-gradient(to bottom, #ff4500, #cc3300);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale(1.05); }
+        
+        /* Combo effect */
+        .combo-text {
+            position: absolute;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffaa00;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 50;
+        }
+        
+        /* Mobile controls */
+        .mobile-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            display: none;
+            justify-content: space-between;
+            pointer-events: auto;
+        }
+        .mobile-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,69,0,0.3);
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+            user-select: none;
+        }
+        .mobile-btn:active {
+            background: rgba(255,69,0,0.6);
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-overlay">
+        <div class="hud-top">
+            <div>
+                <h1 style="color: #ff4500; margin: 0; font-style: italic; letter-spacing: -1px;">VOLCANO RUN 2D</h1>
+                <p style="color: rgba(255,255,255,0.7); margin: 5px 0; font-size: 0.9rem;">ARROWS/WASD + SPACE</p>
+            </div>
+            <div id="stats-container">
+                <div class="hearts" id="hearts">
+                    <div class="heart">❤</div>
+                    <div class="heart">❤</div>
+                    <div class="heart">❤</div>
+                </div>
+                <div id="score-label">0</div>
+                <div id="best-label">Best: 0</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over">
+        <h1 style="font-size: 3rem; margin: 0; color: #ff2200;">GAME OVER</h1>
+        <p style="opacity: 0.8;">You fell into the lava!</p>
+        <div style="margin: 30px 0;">
+            <div style="font-size: 1rem; color: #ffaa00;">Final Score</div>
+            <div id="final-score" style="font-size: 3rem; font-weight: bold;">0</div>
+        </div>
+        <button onclick="resetGame()">PLAY AGAIN</button>
+    </div>
+
+    <div class="mobile-controls" id="mobile-controls">
+        <div class="mobile-btn" id="left-btn">←</div>
+        <div class="mobile-btn" id="right-btn">→</div>
+        <div class="mobile-btn" id="jump-btn">↑</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // Enhanced but clean version - keeping it simple and working
+        const CONFIG = {
+            GRAVITY: 40,
+            JUMP_POWER: 14,
+            RUN_SPEED: 12,
+            CAMERA_SMOOTH: 0.08,
+            INITIAL_PLATFORMS: 12,
+            LAVA_Y: -2
+        };
+
+        let scene, camera, renderer, player, playerVisual;
+        let moveLeft = false, moveRight = false, canJump = false;
+        let velocity = new THREE.Vector2(0, 0);
+        let platforms = [];
+        let particles = [];
+        let score = 0, hearts = 3, bestScore = 0;
+        let combo = 0, comboTimeout = 0;
+        let gameActive = true;
+        let nextPlatformX = 0;
+        let prevTime = performance.now();
+
+        // Audio setup
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(freq, duration, type = 'sine') {
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = freq;
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch(e) {
+                // Audio not supported, silent fail
+            }
+        }
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0000);
+            scene.fog = new THREE.FogExp2(0x1a0500, 0.04);
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 4, 15);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.body.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffeedd, 0.7);
+            directionalLight.position.set(5, 10, 7);
+            scene.add(directionalLight);
+
+            // Lava glow
+            const lavaLight = new THREE.PointLight(0xff3300, 1.5, 30);
+            lavaLight.position.set(0, -1, 0);
+            scene.add(lavaLight);
+
+            createPlayer();
+            createLava();
+            createBackground();
+            spawnInitialPlatforms();
+            setupEventListeners();
+            
+            animate();
+        }
+
+        function createPlayer() {
+            player = new THREE.Group();
+            playerVisual = new THREE.Group();
+
+            // Simple but good looking character
+            const body = new THREE.Mesh(
+                new THREE.BoxGeometry(0.7, 0.9, 0.5),
+                new THREE.MeshStandardMaterial({ 
+                    color: 0x2244ff,
+                    emissive: 0x001144,
+                    emissiveIntensity: 0.3
+                })
+            );
+            body.position.y = 0.45;
+            playerVisual.add(body);
+
+            const head = new THREE.Mesh(
+                new THREE.BoxGeometry(0.5, 0.5, 0.5),
+                new THREE.MeshStandardMaterial({ color: 0xffdbac })
+            );
+            head.position.y = 1.15;
+            playerVisual.add(head);
+
+            player.add(playerVisual);
+            player.position.set(0, 2, 0);
+            scene.add(player);
+        }
+
+        function createLava() {
+            // Main lava surface with waves
+            const segments = 50;
+            const lavaGeo = new THREE.PlaneGeometry(200, 10, segments, 1);
+            const lavaMat = new THREE.MeshStandardMaterial({ 
+                color: 0xff2200, 
+                emissive: 0xaa1100,
+                emissiveIntensity: 1.2,
+                side: THREE.DoubleSide
+            });
+            
+            // Create wave animation
+            const positions = lavaGeo.attributes.position.array;
+            lavaGeo.userData.basePositions = positions.slice();
+            lavaGeo.userData.time = 0;
+            
+            const lava = new THREE.Mesh(lavaGeo, lavaMat);
+            lava.rotation.x = Math.PI / 2;
+            lava.position.y = CONFIG.LAVA_Y;
+            lava.position.z = 0;
+            scene.add(lava);
+            
+            // Create lava particles
+            for (let i = 0; i < 15; i++) {
+                createLavaParticle();
+            }
+        }
+
+        function createLavaParticle() {
+            const size = Math.random() * 0.2 + 0.1;
+            const geometry = new THREE.SphereGeometry(size, 6, 6);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0xff5500,
+                transparent: true,
+                opacity: 0.6
+            });
+            
+            const particle = new THREE.Mesh(geometry, material);
+            particle.position.set(
+                (Math.random() - 0.5) * 30,
+                CONFIG.LAVA_Y + Math.random() * 1,
+                (Math.random() - 0.5) * 3
+            );
+            
+            particle.userData.velocity = new THREE.Vector3(
+                (Math.random() - 0.5) * 0.1,
+                Math.random() * 0.1 + 0.05,
+                0
+            );
+            particle.userData.life = Math.random() * 2 + 1;
+            
+            scene.add(particle);
+            particles.push(particle);
+        }
+
+        function createBackground() {
+            const bgGeo = new THREE.PlaneGeometry(200, 100);
+            const bgMat = new THREE.MeshBasicMaterial({ 
+                color: 0x050100,
+                side: THREE.DoubleSide
+            });
+            const backWall = new THREE.Mesh(bgGeo, bgMat);
+            backWall.position.z = -5;
+            scene.add(backWall);
+        }
+
+        function createPlatform(x, y, w) {
+            const width = w;
+            const geo = new THREE.BoxGeometry(width, 1.5, 2);
+            const mat = new THREE.MeshStandardMaterial({ 
+                color: 0x333333,
+                roughness: 0.9
+            });
+            
+            const platform = new THREE.Mesh(geo, mat);
+            platform.position.set(x, y - 0.75, 0);
+            
+            // Add glowing cracks occasionally
+            if (Math.random() < 0.2) {
+                const crackGeo = new THREE.BoxGeometry(width * 0.8, 0.1, 0.2);
+                const crackMat = new THREE.MeshBasicMaterial({
+                    color: 0xff5500,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                const crack = new THREE.Mesh(crackGeo, crackMat);
+                crack.position.set(0, 0.8, 0);
+                platform.add(crack);
+            }
+            
+            scene.add(platform);
+            platforms.push({
+                mesh: platform,
+                scored: false,
+                width: width
+            });
+        }
+
+        function spawnInitialPlatforms() {
+            createPlatform(0, 0, 10);
+            nextPlatformX = 8;
+            for (let i = 0; i < CONFIG.INITIAL_PLATFORMS; i++) {
+                spawnNextPlatform();
+            }
+        }
+
+        function spawnNextPlatform() {
+            const width = 3 + Math.random() * 4;
+            const gap = 4 + Math.random() * 4;
+            const height = (Math.random() - 0.5) * 3;
+            
+            nextPlatformX += gap;
+            createPlatform(nextPlatformX, height, width);
+        }
+
+        function setupEventListeners() {
+            const onKey = (e, val) => {
+                if (!gameActive) return;
+                
+                switch (e.code) {
+                    case 'ArrowLeft': 
+                    case 'KeyA': moveLeft = val; break;
+                    case 'ArrowRight': 
+                    case 'KeyD': moveRight = val; break;
+                    case 'Space': 
+                    case 'ArrowUp':
+                        if (val && canJump && gameActive) { 
+                            velocity.y = CONFIG.JUMP_POWER;
+                            canJump = false;
+                            playSound(800, 0.1);
+                        } 
+                        break;
+                }
+            };
+            
+            document.addEventListener('keydown', (e) => onKey(e, true));
+            document.addEventListener('keyup', (e) => onKey(e, false));
+            
+            // Mobile controls
+            const mobileBtns = ['left-btn', 'right-btn', 'jump-btn'];
+            mobileBtns.forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    btn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        if (id === 'left-btn') moveLeft = true;
+                        if (id === 'right-btn') moveRight = true;
+                        if (id === 'jump-btn' && canJump && gameActive) {
+                            velocity.y = CONFIG.JUMP_POWER;
+                            canJump = false;
+                            playSound(800, 0.1);
+                        }
+                    });
+                    
+                    btn.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        if (id === 'left-btn') moveLeft = false;
+                        if (id === 'right-btn') moveRight = false;
+                    });
+                }
+            });
+            
+            // Show mobile controls on touch devices
+            if ('ontouchstart' in window || navigator.maxTouchPoints) {
+                document.getElementById('mobile-controls').style.display = 'flex';
+            }
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function checkCollision() {
+            let onGround = false;
+            const playerX = player.position.x;
+            const playerY = player.position.y;
+            
+            for (let i = 0; i < platforms.length; i++) {
+                const plat = platforms[i];
+                const halfWidth = plat.width / 2;
+                
+                if (playerX > plat.mesh.position.x - halfWidth - 0.3 && 
+                    playerX < plat.mesh.position.x + halfWidth + 0.3) {
+                    
+                    const topY = plat.mesh.position.y + 0.75;
+                    
+                    if (playerY >= topY - 0.2 && playerY <= topY + 0.3 && velocity.y <= 0) {
+                        onGround = true;
+                        velocity.y = 0;
+                        player.position.y = topY;
+                        canJump = true;
+                        
+                        // Landing effect
+                        playerVisual.scale.set(1.1, 0.9, 1.1);
+                        
+                        // Score logic
+                        if (!plat.scored) {
+                            plat.scored = true;
+                            const newScore = Math.floor(playerX / 8);
+                            if (newScore > score) {
+                                score = newScore;
+                                document.getElementById('score-label').innerText = score;
+                                
+                                // Score sound
+                                playSound(1200, 0.1);
+                                
+                                // Combo system
+                                combo++;
+                                comboTimeout = performance.now() + 1500;
+                                
+                                if (combo > 2) {
+                                    showCombo(combo);
+                                    playSound(1400, 0.15);
+                                }
+                                
+                                // Spawn more platforms if needed
+                                if (platforms.length < score + 15) {
+                                    spawnNextPlatform();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Remove old platforms
+            for (let i = platforms.length - 1; i >= 0; i--) {
+                if (platforms[i].mesh.position.x < camera.position.x - 25) {
+                    scene.remove(platforms[i].mesh);
+                    platforms.splice(i, 1);
+                }
+            }
+            
+            // Check if fell in lava
+            if (playerY < CONFIG.LAVA_Y) {
+                takeDamage();
+            }
+            
+            return onGround;
+        }
+
+        function showCombo(count) {
+            const comboDiv = document.createElement('div');
+            comboDiv.className = 'combo-text';
+            comboDiv.textContent = `${count}x COMBO!`;
+            comboDiv.style.left = '50%';
+            comboDiv.style.top = '40%';
+            comboDiv.style.transform = 'translate(-50%, -50%)';
+            
+            document.body.appendChild(comboDiv);
+            
+            // Animate
+            comboDiv.animate([
+                { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
+                { opacity: 1, transform: 'translate(-50%, -50%) scale(1.2)' },
+                { opacity: 0, transform: 'translate(-50%, -50%) scale(1)' }
+            ], {
+                duration: 800,
+                easing: 'ease-out'
+            });
+            
+            setTimeout(() => comboDiv.remove(), 800);
+        }
+
+        function updateParticles(deltaTime) {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.userData.life -= deltaTime;
+                
+                if (p.userData.life <= 0) {
+                    scene.remove(p);
+                    particles.splice(i, 1);
+                    continue;
+                }
+                
+                p.position.x += p.userData.velocity.x * deltaTime * 10;
+                p.position.y += p.userData.velocity.y * deltaTime * 10;
+                p.material.opacity = (p.userData.life / 3) * 0.6;
+            }
+        }
+
+        function takeDamage() {
+            hearts--;
+            updateHeartsUI();
+            
+            playSound(300, 0.3);
+            
+            // Screen shake
+            camera.position.x += (Math.random() - 0.5) * 1;
+            camera.position.y += (Math.random() - 0.5) * 1;
+            
+            if (hearts <= 0) {
+                endGame();
+            } else {
+                // Reset with penalty
+                velocity.set(0, 0);
+                combo = 0;
+                
+                // Find safe platform
+                let safePlat = null;
+                for (let plat of platforms) {
+                    if (plat.mesh.position.x <= player.position.x && 
+                        plat.mesh.position.x > player.position.x - 15) {
+                        safePlat = plat;
+                        break;
+                    }
+                }
+                
+                if (!safePlat) safePlat = platforms[0];
+                player.position.set(safePlat.mesh.position.x, safePlat.mesh.position.y + 4, 0);
+            }
+        }
+
+        function updateHeartsUI() {
+            const heartsDiv = document.getElementById('hearts');
+            heartsDiv.innerHTML = '';
+            
+            for (let i = 0; i < 3; i++) {
+                const heart = document.createElement('div');
+                heart.className = i < hearts ? 'heart' : 'heart lost';
+                heart.innerHTML = '❤';
+                heartsDiv.appendChild(heart);
+            }
+        }
+
+        function endGame() {
+            gameActive = false;
+            
+            if (score > bestScore) {
+                bestScore = score;
+                document.getElementById('best-label').innerText = `Best: ${bestScore}`;
+            }
+            
+            document.getElementById('final-score').innerText = score;
+            
+            // Show combo bonus if any
+            if (combo > 2) {
+                const finalScore = document.getElementById('final-score');
+                finalScore.innerHTML = `${score}<br><span style="font-size: 1.5rem; color: #ffaa00">+${combo} combo</span>`;
+            }
+            
+            setTimeout(() => {
+                document.getElementById('game-over').style.display = 'block';
+            }, 500);
+            
+            playSound(200, 0.5);
+        }
+
+        function resetGame() {
+            hearts = 3;
+            score = 0;
+            combo = 0;
+            nextPlatformX = 0;
+            
+            updateHeartsUI();
+            document.getElementById('score-label').innerText = "0";
+            document.getElementById('game-over').style.display = 'none';
+            
+            // Clear platforms
+            platforms.forEach(p => scene.remove(p.mesh));
+            platforms = [];
+            
+            // Reset player
+            player.position.set(0, 2, 0);
+            playerVisual.rotation.set(0, 0, 0);
+            playerVisual.scale.set(1, 1, 1);
+            velocity.set(0, 0);
+            
+            // Reset camera
+            camera.position.set(0, 4, 15);
+            
+            spawnInitialPlatforms();
+            gameActive = true;
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const currentTime = performance.now();
+            const deltaTime = Math.min((currentTime - prevTime) / 1000, 0.1);
+            
+            if (gameActive) {
+                // Apply gravity
+                velocity.y -= CONFIG.GRAVITY * deltaTime;
+                
+                // Horizontal movement
+                const moveDir = (moveRight ? 1 : 0) - (moveLeft ? 1 : 0);
+                player.position.x += moveDir * CONFIG.RUN_SPEED * deltaTime;
+                player.position.y += velocity.y * deltaTime;
+                
+                // Character animation
+                playerVisual.scale.lerp(new THREE.Vector3(1, 1, 1), 0.2);
+                
+                if (moveDir !== 0) {
+                    playerVisual.rotation.y = moveDir > 0 ? 0 : Math.PI;
+                    playerVisual.rotation.z = THREE.MathUtils.lerp(
+                        playerVisual.rotation.z, 
+                        -moveDir * 0.1, 
+                        0.15
+                    );
+                } else {
+                    playerVisual.rotation.z = THREE.MathUtils.lerp(playerVisual.rotation.z, 0, 0.15);
+                }
+                
+                // Idle bobbing
+                if (canJump && moveDir === 0) {
+                    player.position.y += Math.sin(currentTime * 0.005) * 0.01;
+                }
+                
+                // Check collisions
+                checkCollision();
+                
+                // Update combo timeout
+                if (combo > 0 && currentTime > comboTimeout) {
+                    combo = 0;
+                }
+                
+                // Update particles
+                updateParticles(deltaTime);
+                
+                // Update lava waves
+                const lava = scene.getObjectByProperty('type', 'Mesh');
+                if (lava && lava.geometry.userData.basePositions) {
+                    const positions = lava.geometry.attributes.position.array;
+                    const basePositions = lava.geometry.userData.basePositions;
+                    lava.geometry.userData.time += deltaTime;
+                    
+                    for (let i = 0; i < positions.length; i += 3) {
+                        const x = basePositions[i];
+                        positions[i + 1] = Math.sin(x * 0.2 + lava.geometry.userData.time * 2) * 0.3;
+                    }
+                    lava.geometry.attributes.position.needsUpdate = true;
+                }
+                
+                // Camera follow
+                const targetX = player.position.x + 5;
+                const targetY = THREE.MathUtils.clamp(player.position.y + 3, 3, 7);
+                
+                camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, CONFIG.CAMERA_SMOOTH);
+                camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, CONFIG.CAMERA_SMOOTH * 0.5);
+                camera.lookAt(camera.position.x, camera.position.y - 1, 0);
+                
+                prevTime = currentTime;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        // Start the game
+        window.onload = init;
+    </script>
+</body>
+</html>
