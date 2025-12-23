@@ -42,3 +42,23 @@ class Password {
     }
 }
 
+generateBtn.addEventListener("click", generatePasswords)
+
+function generatePasswords(){
+    const weakPassword = new Password(6, false, false, true, false);
+    const mediumPassword = new Password(10, true, true, true, false);
+    const strongPassword = new Password(16, true, true, true, true);
+
+    passwordValues.forEach((passwordValue)=>{
+        const strength = passwordValue.getAttribute("data-strength");
+        if(strength === "weak"){
+            passwordValue.textContent = weakPassword.generate();
+        }
+        if(strength === "medium"){
+            passwordValue.textContent = mediumPassword.generate();
+        }   
+        if(strength === "strong"){
+            passwordValue.textContent = strongPassword.generate();
+        }
+    })
+}
