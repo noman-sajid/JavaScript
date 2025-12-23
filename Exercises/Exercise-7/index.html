@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="app">
+    <section class="password-generator">
+
+      <h1 class="title">Password Generator</h1>
+
+      <button class="generate-btn" type="button">
+        Generate Passwords
+      </button>
+
+      <div class="password-list">
+
+        <div class="password-card weak">
+          <h3>Weak</h3>
+          <span class="password-value" data-strength="weak">
+            —
+          </span>
+        </div>
+
+        <div class="password-card medium">
+          <h3>Medium</h3>
+          <span class="password-value" data-strength="medium">
+            —
+          </span>
+        </div>
+
+        <div class="password-card strong">
+          <h3>Strong</h3>
+          <span class="password-value" data-strength="strong">
+            —
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
