@@ -264,3 +264,25 @@ function calcAvg(arr){
 
 console.log(calcAvg(givenArray))
 
+
+
+//  //Create a function that receives an 
+// array of numbers and returns an 
+// array containing only the positive 
+// numbers.
+//  Requirement: Use a “for” loop
+
+let givenArray1 =  [1, 3, -9, 15, -90];
+
+let sum1 = 0;
+function filtNeg(arr){
+    let positiveArr = []
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i] > 0){
+          positiveArr.push(arr[i])
+        }
+    }
+    return positiveArr;
+}
+
+console.log(filtNeg(givenArray))
