@@ -286,3 +286,22 @@ function filtNeg(arr){
 }
 
 console.log(filtNeg(givenArray))
+
+
+
+// //Create a function that receives an 
+// array of numbers and returns an array 
+// containing only the positive numbers.
+//  Requirement: Use a “for … of” loop
+let givenArray2 =  [1, 3, -9, 15, -90,100,120];
+
+let sum2 = 0;
+function filtNeg(arr){
+    let positiveArr = []
+    for(num of arr){
+        if(num > 0){
+          positiveArr.push(num)
+        }
+    }
+    return positiveArr;
+}
