@@ -221,3 +221,19 @@ console.log(adminUser.password); // "******" (masked)
 adminUser.login("Secure123!");   // Logs: "Admin login successful..."
 console.log(Admin.isStrongPassword("weak"));       // false
 console.log(Admin.isStrongPassword("StrongPass1!")); // true
+
+
+
+
+
+// //Create a function that will 
+// convert from Fahrenheit to Celsius
+
+function convertTemp(n){
+
+    n = (n - 32) / 1.8
+    return n;
+    
+}
+
+console.log(convertTemp(32));
