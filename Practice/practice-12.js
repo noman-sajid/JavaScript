@@ -305,3 +305,21 @@ function filtNeg(arr){
     }
     return positiveArr;
 }
+
+
+
+
+// Create a function that receives an 
+// array of numbers and returns an array 
+// containing only the positive numbers.
+//  Requirement: Use .filter() array 
+// method
+
+let givenArray3 =  [1, 3, -9, 15, -90,100,-120];
+
+function filtNeg(arr){
+    let positiveArr = arr.filter((num) => num > 0)
+    return positiveArr;
+}
+
+console.log(filtNeg(givenArray3))
