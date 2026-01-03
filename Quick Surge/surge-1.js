@@ -63,3 +63,35 @@ function findLargest(arr) {
 }
 
 console.log(findLargest([3, 7, 2, 9, 1])); // 9
+
+
+
+/*
+Problem:
+Return the sum of all numbers in an array.
+*/
+
+function sumOfArray(arr) {
+  let sum = 0;
+
+  for (let num of arr) {
+    sum += num;
+  }
+
+  return sum;
+}
+
+console.log(sumOfArray([1, 2, 3, 4])); // 10
+
+
+/*
+Problem:
+Determine whether a number is even or odd.
+*/
+
+function evenOrOdd(num) {
+  return num % 2 === 0 ? "Even" : "Odd";
+}
+
+console.log(evenOrOdd(10)); // Even
+console.log(evenOrOdd(7)); // Odd
