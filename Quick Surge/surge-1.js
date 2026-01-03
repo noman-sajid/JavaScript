@@ -114,3 +114,23 @@ function countPositives(arr) {
 }
 
 console.log(countPositives([-1, 2, -3, 4])); // 2
+
+
+/*
+Problem:
+Remove duplicate values from an array.
+*/
+
+function removeDuplicates(arr) {
+  let result = [];
+
+  for (let item of arr) {
+    if (!result.includes(item)) {
+      result.push(item);
+    }
+  }
+
+  return result;
+}
+
+console.log(removeDuplicates([1, 2, 2, 3, 1])); // [1, 2, 3]
