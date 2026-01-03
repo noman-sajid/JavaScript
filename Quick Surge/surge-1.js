@@ -41,3 +41,25 @@ function countVowels(str) {
 }
 
 console.log(countVowels("JavaScript")); // 3
+
+
+/*
+Problem:
+Find the largest number in an array.
+*/
+
+function findLargest(arr) {
+  if (arr.length === 0) return "Empty Array";
+
+  let largest = arr[0];
+
+  for (let num of arr) {
+    if (num > largest) {
+      largest = num;
+    }
+  }
+
+  return largest;
+}
+
+console.log(findLargest([3, 7, 2, 9, 1])); // 9
