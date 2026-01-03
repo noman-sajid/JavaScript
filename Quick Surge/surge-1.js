@@ -134,3 +134,65 @@ function removeDuplicates(arr) {
 }
 
 console.log(removeDuplicates([1, 2, 2, 3, 1])); // [1, 2, 3]
+
+
+/*
+Problem:
+Check if a string is a palindrome.
+*/
+
+function isPalindrome(str) {
+  let reversed = "";
+  let lowered = str.toLowerCase();
+
+  for (let i = lowered.length - 1; i >= 0; i--) {
+    reversed += lowered[i];
+  }
+
+  return reversed === lowered;
+}
+
+console.log(isPalindrome("madam")); // true
+console.log(isPalindrome("hello")); // false
+
+
+
+/*
+Problem:
+Find the smallest number in an array.
+*/
+
+function findSmallest(arr) {
+  if (arr.length === 0) return "Empty Array";
+
+  let smallest = arr[0];
+
+  for (let num of arr) {
+    if (num < smallest) {
+      smallest = num;
+    }
+  }
+
+  return smallest;
+}
+
+console.log(findSmallest([2, 3, 4, 1, -9])); // -9
+
+
+
+/*
+Problem:
+Return the product of all numbers in an array.
+*/
+
+function multiplyArray(arr) {
+  let product = 1;
+
+  for (let num of arr) {
+    product *= num;
+  }
+
+  return product;
+}
+
+console.log(multiplyArray([2, 3, 4])); // 24
