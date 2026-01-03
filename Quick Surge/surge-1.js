@@ -19,3 +19,25 @@ function reverseString(str) {
 // Test
 console.log(reverseString("JavaScript")); // "tpircSavaJ"
 console.log(reverseString("hello")); // "olleh"
+
+
+/*
+Problem:
+Count the number of vowels in a string.
+*/
+
+function countVowels(str) {
+  let vowels = "aeiou";
+  let count = 0;
+  let lowered = str.toLowerCase();
+
+  for (let char of lowered) {
+    if (vowels.includes(char)) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+console.log(countVowels("JavaScript")); // 3
