@@ -95,3 +95,22 @@ function evenOrOdd(num) {
 
 console.log(evenOrOdd(10)); // Even
 console.log(evenOrOdd(7)); // Odd
+
+
+
+/*
+Problem:
+Count how many positive numbers are in an array.
+*/
+
+function countPositives(arr) {
+  let count = 0;
+
+  for (let num of arr) {
+    if (num > 0) count++;
+  }
+
+  return count;
+}
+
+console.log(countPositives([-1, 2, -3, 4])); // 2
