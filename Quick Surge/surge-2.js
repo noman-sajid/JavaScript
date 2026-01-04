@@ -40,3 +40,56 @@ function reverseWords(str){
 console.log(reverseWords("  Hello   World  ")); // "World Hello"
 
 
+
+
+// Problem:
+// Find the first non-repeating character in a string.
+
+function firstUnique(str){
+    for(let i = 0; i < str.length; i++){
+        let isUnique = true;
+
+        for(let j = 0; j < str.length; j++){
+            if( i !== j && str[i] === str[j]){
+                isUnique = false;
+                break;
+            }
+        }
+
+        if(isUnique){
+            return str[i];
+        }
+    }
+
+    return null;
+}
+
+firstUnique("aabbccdeff")
+
+
+
+// Using frequency object:
+
+function firstUnique(str){
+    let freq = {}
+    for(let i = 0; i < str.length; i++){
+       if(freq[str[i]]){
+       freq[str[i]]++
+       } else {
+          freq[str[i]] = 1
+       }
+       
+       
+    }
+   for(let i = 0; i < str.length; i++){
+      if(freq[str[i]] === 1){
+         return str[i];
+         
+      }
+     
+   }
+  return null;
+}
+
+firstUnique("aabbccdeff")
+
