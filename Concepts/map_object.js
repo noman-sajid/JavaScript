@@ -50,3 +50,18 @@ console.log(arrayToMap.get('country')); // USA
 // 2. When keys are not strings or symbols (e.g., objects, functions).
 // 3. When frequent additions and deletions of key-value pairs are required, as Maps are optimized for such operations.
 // 4. When you need to store unique keys and want to avoid collisions that can occur in plain objects.
+
+
+// Interview Question:
+// Q: What are the differences between a Map and a plain JavaScript object?
+// A: 1. Maps maintain the order of insertion, while objects do not.
+//    2. Keys in Maps can be of any type, whereas in objects, keys are typically strings or symbols.
+//    3. Maps have a size property that directly returns the number of entries, while objects require manual counting.
+//    4. Maps are optimized for frequent additions and deletions of key-value pairs.
+
+// Q: How do you iterate over a Map?
+// A: You can use the forEach() method, for...of loops, or convert the Map to an array using Array.from() and then iterate.
+// Q: Can you use objects as keys in a Map?
+// A: Yes, Maps allow objects (and other non-primitive types) to be used as keys.
+// Q: How do you convert a Map to an Array and vice versa?
+// A: Use Array.from(myMap) to convert a Map to an Array, and use new Map(array) to convert an Array to a Map.
