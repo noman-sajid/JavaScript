@@ -1,5 +1,5 @@
-// Sliding Window - Longest Substring Without Repeating Characters
-// Given a string, find the length of the longest substring without repeating characters.
+// Sliding Window - Longest Substring Without Repeating Characters O(n^2) Complexity
+
 function longestSub(string){
   let subStr = "";
   let subStrArr = []
@@ -25,3 +25,40 @@ function longestSub(string){
 
 console.log(longestSub("dvdf"))
 console.log(longestSub("pwwkew"))
+
+
+
+
+
+// Longest Substring Without Repeating Characters O(n) Complexity
+function longestSub(s) {
+  const map = new Map();
+  let left = 0;        
+  let longestStr = ""; 
+
+  for (let right = 0; right < s.length; right++) {
+    const char = s[right];
+
+    if (map.has(char)) {
+      left = Math.max(left, map.get(char) + 1);
+    }
+
+    map.set(char, right);
+
+    const currentWindow = s.substring(left, right + 1);
+
+    if (currentWindow.length > longestStr.length) {
+      longestStr = currentWindow;
+    }
+  }
+
+  return longestStr;
+}
+
+// Test Case
+console.log(longestSub("abcabcbb"));
+
+/*
+Output:
+"abc"
+*/
