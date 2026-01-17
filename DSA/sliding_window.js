@@ -1,30 +1,32 @@
-// Sliding Window - Longest Substring Without Repeating Characters O(n^2) Complexity
+// Sliding Window - Longest Substring Without Repeating Characters
+// Time Complexity: O(n^2)
 
-function longestSub(string){
-  let subStr = "";
-  let subStrArr = []
-  let maxLength = 0;
+function longestSub(string) {
+  let subStr = "";      
+  let longestStr = "";  
 
-  for(let i = 0; i < string.length; i++){
-   while(subStr.includes(string[i])){
-   subStr =   subStr.slice(1)
+  for (let i = 0; i < string.length; i++) {
+
+    while (subStr.includes(string[i])) {
+      subStr = subStr.slice(1);
     }
-   
-  subStr += (string[i])
 
-   if(maxLength < subStr.length){
-   maxLength = subStr.length;
-   }
+    subStr += string[i];
 
-   
+    if (subStr.length > longestStr.length) {
+      longestStr = subStr;
+    }
   }
-  
-  return maxLength;
+
+  return longestStr;
 }
 
+// Test Cases
+console.log(longestSub("dvdf")); // Output: "vdf"
 
-console.log(longestSub("dvdf"))
-console.log(longestSub("pwwkew"))
+
+
+
 
 
 
@@ -56,9 +58,12 @@ function longestSub(s) {
 }
 
 // Test Case
-console.log(longestSub("abcabcbb"));
+console.log(longestSub("abcabcbb")); // Output: "abc"
 
-/*
-Output:
-"abc"
-*/
+
+//Explanation:
+// 1. The function longestSub takes a string as input and initializes a Map to track characters and their indices.
+// 2. Two pointers, left and right, define the current window of non-repeating characters.
+// 3. As the right pointer iterates through the string, if a repeating character is found, the left pointer is updated to exclude the previous occurrence.
+// 4. The current window is checked for its length, and if it's the longest found so far, it updates the longestStr variable.
+// 5. Finally, the function returns the longest substring without repeating characters.
