@@ -19,3 +19,22 @@
 
 // Traversal Logic:
 // Root -> Child A -> Sub-Child 1 (Dead end) -> Backtrack -> Child B...
+
+
+function findInCategoryMenu(menu, targetName) {
+  
+  if (menu.name === targetName) {
+    return menu;
+  }
+
+  if (menu.subCategories) {
+    for (let sub of menu.subCategories) {
+      const found = findInCategoryMenu(sub, targetName);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+console.log(findInCategoryMenu(categoryMenu, "DSLR"));
+// Output : { name: 'DSLR', subCategories: [] }
