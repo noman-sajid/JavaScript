@@ -38,3 +38,36 @@ function findInCategoryMenu(menu, targetName) {
 
 console.log(findInCategoryMenu(categoryMenu, "DSLR"));
 // Output : { name: 'DSLR', subCategories: [] }
+
+
+// Common interview Questions 
+// 1. Find a value in a nested object structure (like the category menu).
+// 2. Generate all paths from root to leaf nodes in a tree (e.g., file system).
+// 3. Count the number of nodes in a tree or graph.
+// 4. Check if a path exists between two nodes in a graph.
+// 5. Solve puzzles like the N-Queens problem or Sudoku using backtracking (a form of DFS).
+
+// Solutions of common intervew questions
+
+//1
+function findValueInNestedObject(obj, target) {
+  if (obj.value === target) {
+    return obj;
+  }
+    for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+            const found = findValueInNestedObject(obj[key], target);
+            if (found) return found;
+        }   
+    }
+  return null;
+}
+
+findInCategoryMenu({
+  name: "Electronics",
+  subCategories: [
+    { name: "Laptops", subCategories: [] },
+    { name: "Cameras", subCategories: [{ name: "DSLR", subCategories: [] }] },
+  ],
+}, "DSLR");
+// Output : { name: 'DSLR', subCategories: [] }
