@@ -86,3 +86,39 @@ function countDigs(num){
 
 console.log(countDigs(234343434343))
 
+
+
+// Problem 7: Given an integer number n, write a program that returns the number formed by reversing the order of its digits.
+
+function reverseNum(num){
+    let reversed = ""
+    let str = num.toString();
+    for(let i = str.length - 1; i >= 0; i--){
+        reversed += str[i]
+    }
+    
+    return parseInt(reversed)
+}
+
+// const reverseNum = (num) => num.toString().split("").reverse().join("")
+
+console.log(reverseNum(123456))
+
+
+// Problem 8:  Given an integer number n, write a program that returns the number formed by reversing the order of its digits.
+
+function palindromeNum(num){
+    let reversed = ""
+    let str = num.toString();
+    for(let i = str.length - 1; i >= 0; i--){
+        reversed += str[i]
+    }
+    let reversedNum = parseInt(reversed)
+    return num === reversedNum
+}
+
+//const palindromeNum = (num) => num === Number([...num.toString()].reverse().join(""));
+
+console.log(palindromeNum(123456))
+console.log(palindromeNum(111111))
+
