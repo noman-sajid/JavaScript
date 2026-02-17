@@ -122,3 +122,39 @@ function palindromeNum(num){
 console.log(palindromeNum(123456))
 console.log(palindromeNum(111111))
 
+
+// Problem 9:  Given a non-negative integer n, write a program that computes the factorial of n.
+
+function findFactorial(n){
+   let factorial = n; 
+   for(let i = n - 1 ; i > 0; i-- ){
+      factorial *= i;
+   }
+    return factorial; 
+}
+
+
+// function findFactorial(n){
+//   if(n === 1){
+//      return 1;
+//   }
+//   return n * findFactorial(n - 1)
+// }
+
+console.log(findFactorial(4))
+console.log(findFactorial(3))
+console.log(findFactorial(5))
+
+
+
+// Given an integer number n, write a program that prints the multiplication table of n from 1 to 10
+
+function printTable(n){
+
+ for(let i = 0 ; i <= 10; i++){
+  console.log(`${n} * ${i} = ${n * i}`)
+ }
+    
+}
+
+console.log(printTable(3))
