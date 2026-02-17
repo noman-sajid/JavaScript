@@ -50,3 +50,39 @@ function celToFar(deg){
 console.log(celToFar(0)) // 32
 console.log(celToFar(2)) // 35.6
 
+
+
+
+// Problem 5 : Sum from 1 to N
+
+function sumToNum(n){
+    let sum = 0 ;
+    for(let i = n; i >=1 ; i--){
+        sum += i 
+    }
+    return sum; 
+}
+
+// function sumToNum(n){
+//     if(n === 1){
+//         return 1 
+//     }
+//     return n +  sumToNum(n - 1)
+// }
+
+console.log(sumToNum(4))
+console.log(sumToNum(6))
+
+
+
+// Problem 6: Given an integer number n, write a program that counts how many digits the number contains.
+
+function countDigs(num){
+    let str = num.toString()
+    return str.length; 
+}
+
+//const countDigs = (num) => num.toString().length;
+
+console.log(countDigs(234343434343))
+
