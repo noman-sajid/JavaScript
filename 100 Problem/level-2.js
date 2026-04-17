@@ -109,3 +109,22 @@ let side_c = parseFloat(prompt("Enter A number"));
 console.log(ifTrinagle(side_a, side_b, side_c))
 
 
+//  Write a function that takes cost price and selling price as input and returns the profit or loss percentage.
+
+
+
+function calculateResult(costPrice, sellingPrice){
+   let percentage = parseInt(((sellingPrice - costPrice) / costPrice) * 100);
+   if(percentage > 0){
+     return `Congratulations, you lost ${percentage}% on this sale!`
+   } else if(percentage < 0){
+     return `Uh oo, you earned ${percentage}% profit on this sale!`
+   } else {
+     return `Ok, you earned ${percentage}% profit on this sale!`
+   }
+}
+
+
+console.log(calculateResult(50, 100))
+console.log(calculateResult(150, 100))
+console.log(calculateResult(100, 100))
