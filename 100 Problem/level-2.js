@@ -85,3 +85,27 @@ let num2 = parseInt(prompt("Enter second number:"));
 let operator = prompt("Enter your operation(e.g +,-,*,/)");
 
 console.log(`${num1} ${operator} ${num2} = ${calculator(num1, num2, operator)}`);
+
+
+// You are provided with three sides write a funciton that checks if the provided sides make a triangle 
+
+
+
+function ifTrinagle(a, b , c){
+    if(a * b * c <= 0 ){
+       return `Given sides do not form a triangle`
+    } else if(a + b > c && b + c > a && a + c  > b){
+         return `Given sides form a triangle`; 
+    } else {
+         return `Given sides do not form a triangle`; 
+    }
+
+}
+
+let side_a = parseFloat(prompt("Enter A number"));
+let side_b = parseFloat(prompt("Enter A number"));
+let side_c = parseFloat(prompt("Enter A number"));
+
+console.log(ifTrinagle(side_a, side_b, side_c))
+
+
