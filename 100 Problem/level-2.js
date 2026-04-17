@@ -57,3 +57,31 @@ console.log(checkGrade(70))
 console.log(checkGrade(55))
 console.log(checkGrade(40))
 console.log(checkGrade(35))
+
+
+// Write a function that takes two numbers and an operator as input and performs the corresponding arithmetic operations 
+
+function calculator(n , m , str ){
+  switch (str) {
+     case "+": 
+     return n + m; 
+     break; 
+    case "-" :
+     return n - m; 
+     break;
+    case "*" : 
+     return n * m; 
+     break;
+    case "/" :
+     return n / m;
+     break; 
+    default : 
+     return "Since You did not provided any operator adding number" + n + m;
+   }
+}
+
+let num1 = parseInt(prompt("Enter first number:"));
+let num2 = parseInt(prompt("Enter second number:"));
+let operator = prompt("Enter your operation(e.g +,-,*,/)");
+
+console.log(`${num1} ${operator} ${num2} = ${calculator(num1, num2, operator)}`);
