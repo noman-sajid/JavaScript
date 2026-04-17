@@ -30,3 +30,30 @@ function ifLeap(year){
 console.log(ifLeap(2023))
 
 console.log(ifLeap(2024))
+
+
+
+// Implement a function checkGrade that accepts a numerical score as an input and returns a descriptive string representing the student's performance and their corresponding grade letter.
+
+
+
+function checkGrade(num){
+    if(num >= 85){
+      return "Distinction you got an A+";
+    } else if(70 <= num && num < 85){
+      return "Excellent you got an A";
+    } else if(55 <= num && num < 70){
+      return "Good you got a B"
+    } else if(40 <= num && num < 55){
+      return "You got a C "
+    } else {
+      return "You failed better luck next time"
+    }
+}
+
+console.log(checkGrade(90))
+console.log(checkGrade(85))
+console.log(checkGrade(70))
+console.log(checkGrade(55))
+console.log(checkGrade(40))
+console.log(checkGrade(35))
