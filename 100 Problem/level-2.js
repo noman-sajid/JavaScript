@@ -210,3 +210,30 @@ console.log(findRoots(0, 2, -4));  // Expected: Linear equation root is 2
 console.log(findRoots(0, 0, 0));   // Expected: Infinate Solutions
 console.log(findRoots(1000, -5000, 6000)); // Expected: real roots
 console.log(findRoots(-1, -3, 4));  // Expected: real roots
+
+
+
+
+/**
+ * PROBLEM 19: Absolute Difference (Level 2)
+ * Goal: Find the non-negative distance between two numbers.
+ * Logic:
+ * - Difference = num1 - num2
+ * - If difference < 0, make it positive.
+ * Math Hint: Think about Math.abs() or multiplying by -1.
+ */
+
+
+function getAbsoluteDifference(num1 , num2 ){
+  let difference = num1 - num2;
+   if(difference < 0){
+     return -(difference)
+   }
+  return difference
+}
+
+console.log(getAbsoluteDifference(5, 10));   // Expected: 5
+console.log(getAbsoluteDifference(10, 5));   // Expected: 5
+console.log(getAbsoluteDifference(-2, 2));   // Expected: 4
+console.log(getAbsoluteDifference(0, -5));   // Expected: 5
+console.log(getAbsoluteDifference(-10, -3)); // Expected: 7
