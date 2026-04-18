@@ -157,3 +157,5 @@ function calculateElectricityBill(unitsConsumed, pricePerUnit){
 console.log(calculateElectricityBill(80, 100))
 console.log(calculateElectricityBill(150, 100))
 console.log(calculateElectricityBill(210, 100))
+
+
