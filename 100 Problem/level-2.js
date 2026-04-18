@@ -159,3 +159,54 @@ console.log(calculateElectricityBill(150, 100))
 console.log(calculateElectricityBill(210, 100))
 
 
+
+
+/**
+ * PROBLEM 18: Quadratic Roots Solver (Level 2)
+ * Goal: Solve for 'x' in ax^2 + bx + c = 0 using the quadratic formula.
+ * Logic:
+ * - Calculate Discriminant (D = b^2 - 4ac).
+ * - D > 0: Two real roots.
+ * - D == 0: One real root.
+ * - D < 0: Complex roots.
+ * Math Hint: Use Math.sqrt() for calculations.
+ */
+
+
+
+function findRoots(a, b , c){
+    if(a == 0){
+      if(b == 0){
+        return c == 0 ? "Infinite Solutions": "No Solutions"
+      }
+        return `Linear equation root is ${-c / b}`;
+    }
+    let root1; 
+    let root2;
+    let discriminant = Math.pow(b, 2) - (4*a*c);
+    if(discriminant > 0 ){
+      root1 = (-b + Math.sqrt(discriminant)) / (2*a);
+      root2 = (-b - Math.sqrt(discriminant)) / (2*a);
+      return `There are two roots ${root1} and ${root2} both are real.`;
+    } else if(discriminant == 0){
+      root1 = (-b + Math.sqrt(discriminant)) / (2*a);
+      return `There is only one root ${root1} for this equation`;
+    } else {
+      return `There are two roots, both are imaginary.`;
+    }
+  
+}
+
+
+
+
+console.log(findRoots(1, -3, 2));  // Expected: roots 2 and 1
+console.log(findRoots(2, 5, -3));  // Expected: roots around 0.5 and -3
+console.log(findRoots(1, -2, 1));  // Expected: root 1
+console.log(findRoots(4, 4, 1));   // Expected: root -0.5
+console.log(findRoots(1, 2, 5));   // Expected: imaginary
+console.log(findRoots(3, 2, 10));  // Expected: imaginary
+console.log(findRoots(0, 2, -4));  // Expected: Linear equation root is 2
+console.log(findRoots(0, 0, 0));   // Expected: Infinate Solutions
+console.log(findRoots(1000, -5000, 6000)); // Expected: real roots
+console.log(findRoots(-1, -3, 4));  // Expected: real roots
