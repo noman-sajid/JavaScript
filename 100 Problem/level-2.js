@@ -128,3 +128,32 @@ function calculateResult(costPrice, sellingPrice){
 console.log(calculateResult(50, 100))
 console.log(calculateResult(150, 100))
 console.log(calculateResult(100, 100))
+
+
+/**
+ * PROBLEM 17: Electricity Bill Calculator (Level 2)
+ * Goal: Calculate total bill using a prioritized threshold logic.
+ * Logic:
+ * - Units > 200: 50% surcharge on price per unit.
+ * - Units > 100: 20% surcharge on price per unit.
+ * - Otherwise: Base price per unit.
+ * Output: Return a grammatically correct string with the total amount due.
+ */
+
+
+
+function calculateElectricityBill(unitsConsumed, pricePerUnit){
+    let surcharge = 0;
+    if(unitsConsumed > 200){
+     surcharge = pricePerUnit * 1.50;
+    } else if(unitsConsumed > 100){
+      surcharge = pricePerUnit * 1.20;
+    } 
+      let price = unitsConsumed * pricePerUnit + surcharge;
+      return `Total amount due:${price}` 
+}
+
+
+console.log(calculateElectricityBill(80, 100))
+console.log(calculateElectricityBill(150, 100))
+console.log(calculateElectricityBill(210, 100))
