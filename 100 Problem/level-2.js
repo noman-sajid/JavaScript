@@ -237,3 +237,43 @@ console.log(getAbsoluteDifference(10, 5));   // Expected: 5
 console.log(getAbsoluteDifference(-2, 2));   // Expected: 4
 console.log(getAbsoluteDifference(0, -5));   // Expected: 5
 console.log(getAbsoluteDifference(-10, -3)); // Expected: 7
+
+
+
+/**
+ * PROBLEM 20: Menu-Driven Program (Level 2)
+ * Goal: Route input keys to specific application actions.
+ * Logic:
+ * - Case '1': View Profile
+ * - Case '2': Edit Settings
+ * - Case '3': Logout
+ * - Default: Handle unknown inputs.
+ */
+
+
+function menuOptions(option){
+  option = option.trim()
+  switch (option) {
+     case "1": 
+     return `You are viewing Provfile`; 
+     break; 
+    case "2" :
+     return `You are viewing Settings`; 
+     break;
+    case "3" : 
+     return `You are viewing About`; 
+     break;
+     default : 
+     return `Empty/invalid input, you are viewing home`;
+   }
+}
+
+let ask = prompt(`Select a number 
+                             1. View Profile
+                             2. View Setting
+                             3. View About
+                             `);
+
+
+
+console.log(menuOptions(ask));
